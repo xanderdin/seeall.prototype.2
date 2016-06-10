@@ -1,0 +1,36 @@
+<template name="DeviceStatusLine">
+  <div class="row">
+    <div class="col s3 center">
+      {{#if device.isOnline }}
+        {{#if device.isLowMoney }}
+        <i class="material-icons orange white-text">attach_money</i>
+        {{else}}
+        <i class="material-icons" style="color: #a7ffeb">visibility</i>
+        {{/if}}
+      {{else}}
+      <i class="material-icons orange white-text">visibility_off</i>
+      {{/if}}
+    </div>
+    <div class="col s3 center">
+      {{#if device.isTamperOpen }}
+      <i class="material-icons red accent-3 white-text">scanner</i>
+      {{else}}
+      <i class="material-icons" style="color: #a7ffeb">scanner</i>
+      {{/if}}
+    </div>
+    <div class="col s3 center">
+      {{#if device.isBatteryLow }}
+      <i class="material-icons orange white-text">battery_alert</i>
+      {{else}}
+      <i class="material-icons" style="color: #a7ffeb">battery_full</i>
+      {{/if}}
+    </div>
+    <div class="col s3 center">
+      {{#if device.isPowerLost }}
+      <i class="material-icons orange white-text">power</i>
+      {{else}}
+      <i class="material-icons" style="color: #a7ffeb">power</i>
+      {{/if}}
+    </div>
+  </div>
+</template>

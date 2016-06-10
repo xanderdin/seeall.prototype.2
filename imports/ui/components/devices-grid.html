@@ -1,0 +1,21 @@
+<template name="Devices_grid">
+
+  <div class="row">
+
+  {{#if devices }}
+
+    {{#each device in devices }}
+      {{> Device_card device=device }}
+    {{/each}}
+
+  {{else}}
+
+    <div class="col s12 center">
+      No devices
+    </div>
+
+  {{/if}}
+
+  </div>
+
+</template>

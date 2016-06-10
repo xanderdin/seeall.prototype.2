@@ -1,0 +1,37 @@
+<template name="Zone_card">
+
+  <div class="col s6 m4 l2">
+    <div class="card zone-card">
+      <span class="card-title">
+        <a href="" class="zone-context-menu-btn waves-effect waves-light btn {{ getZoneColorClass }}" data-activates="zone-context-menu-{{ zone._id }}">
+          {{ formatZoneNum }}
+          <!-- <i class="material-icons right" style="padding-top: 5px;">more_vert</i> -->
+        </a>
+      </span>
+      <div class="card-content">
+        <!-- <span class="zone-num">{{ formatZoneNum }}</span> -->
+        <p class="center-align">
+          {{{ getZoneMainIconTag }}}
+        </p>
+        <p class="center-align">
+          <span class="zone-name truncate">{{#if zone.name }}{{ zone.name }}{{else}}&nbsp;{{/if}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ul id="zone-context-menu-{{ zone._id }}" class="dropdown-content">
+    {{#unless isZoneSiren }}
+    <li><a href="" class="js-zone-arm">Arm</a></li>
+    <li><a href="" class="js-zone-disarm">Disarm</a></li>
+    <!-- <li><a href="" class="js-zone-state">State</a></li> -->
+    <li class="divider"></li>
+    {{/unless}}
+    <li><a href="#ZoneEdit_{{ zone._id }}" class="modal-trigger js-zone-edit">Edit</a></li>
+    <li><a href="#ZoneRemove_{{ zone._id }}" class="modal-trigger js-zone-remove">Remove</a></li>
+  </ul>
+
+  {{> ZoneEdit_modal deviceId=deviceId zone=zone }}
+  {{> ZoneRemove_modal deviceId=deviceId zone=zone }}
+
+</template>

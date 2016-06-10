@@ -1,0 +1,44 @@
+<template name="DeviceDetails">
+
+  {{> NavbarDeviceDetails device=device }}
+
+  <div class="row" style="padding-top: 48px;">
+
+    <div class="col s12" id="tabInfo">
+
+      <div class="row">
+        {{> Device_card device=device deviceDetails=true }}
+      </div>
+
+      <!-- {{> BtnFloating_DeviceActions device=device }} -->
+
+    </div>
+
+    <div class="col s12" id="tabZones">
+
+      <div class="row">
+        {{#each zone in device.zones }}
+          {{> Zone_card deviceId=device._id zone=zone }}
+        {{/each}}
+      </div>
+
+      <!-- {{> BtnFloating_DeviceActions device=device }} -->
+
+    </div>
+
+    <div class="col s12" id="tabHistory">
+      <ul class="collection">
+        {{#each record in history }}
+          {{> History_line record=record }}
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="col s12" id="tabUsers">
+      Users
+    </div>
+
+  </div>
+
+
+</template>

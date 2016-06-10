@@ -1,0 +1,18 @@
+<template name="Devices_page">
+
+  {{> NavbarMain '' }}
+
+  {{#if Template.subscriptionsReady }}
+
+    {{> Devices_grid devices=devices }}
+
+    {{> BtnFloating_AddNewDevice }}
+    {{> AddNewDevice_modal }}
+
+  {{else}}
+
+    {{> Loading }}
+
+  {{/if}}
+
+</template>

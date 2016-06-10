@@ -1,0 +1,25 @@
+.zone-card {
+  position: relative;
+}
+
+.zone-num {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: #607d8b;
+  color: #ffffff;
+  padding-left: 4px;
+  padding-top: 2px;
+  padding-right: 4px;
+  padding-bottom: 2px;
+}
+
+.zone-name {
+
+}
+
+.zone-icon {
+  /*position: absolute;
+  top: 100%;
+  left: 100%;*/
+}

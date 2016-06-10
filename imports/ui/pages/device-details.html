@@ -1,0 +1,25 @@
+<template name="DeviceDetails_page">
+
+  {{#if Template.subscriptionsReady }}
+
+    {{#if device }}
+
+      {{> DeviceDetails device=device history=history }}
+
+    {{else}}
+
+      {{> NavbarMain '' }}
+      <div class="">
+        No such device
+      </div>
+
+    {{/if}}
+
+  {{else}}
+
+    {{> NavbarMain '' }}
+    {{> Loading }}
+
+  {{/if}}
+
+</template>

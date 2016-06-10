@@ -1,0 +1,34 @@
+<template name="NavbarMain">
+
+  <div class="navbar-fixed">
+    <nav>
+
+      <div class="nav-wrapper blue-grey">
+
+        <a href="/" class="brand-logo">See All</a>
+        <a href="" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+
+        <!-- Wide screen menu -->
+        <ul class="right hide-on-med-and-down">
+          {{> NavbarMainItems '' }}
+        </ul>
+
+        <!-- Mobile screen menu -->
+        <ul class="side-nav" id="mobile-menu">
+          {{> NavbarMainItems '' }}
+        </ul>
+
+      </div>
+
+    </nav>
+  </div>
+
+</template>
+
+
+<template name="NavbarMainItems">
+  <li><a href="/devices/">Devices</a></li>
+  <li><a href="/settings/">Settings</a></li>
+  <li><a href="/about/">About</a></li>
+  <li><a href="/help/">Help</a></li>
+</template>

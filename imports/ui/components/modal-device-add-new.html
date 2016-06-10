@@ -1,0 +1,27 @@
+<template name="AddNewDevice_modal">
+
+  <div class="modal modal-fixed-footer" id="addNewDeviceDialog">
+    <div class="modal-content">
+      <h5>New Device</h5>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="text" name="newDeviceGid" id="newDeviceGid" placeholder="GID" class="validate">
+              <label for="newDeviceGid">GID</label>
+            </div>
+            <div class="input-field col s12">
+              <input type="text" name="newDeviceName" id="newDeviceName" placeholder="Name" class="validate">
+              <label for="newDeviceName">Name</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-add-new-device">Add</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+    </div>
+  </div>
+
+</template>

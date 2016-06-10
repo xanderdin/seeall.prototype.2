@@ -1,0 +1,49 @@
+<template name="NavbarDeviceDetails">
+
+  <div class="navbar-fixed">
+    <nav>
+
+      <div class="nav-wrapper blue-grey">
+
+        <ul class="left">
+          <li><a href="/"><i class="material-icons">arrow_back</i></a></li>
+        </ul>
+
+        <a href="/" class="brand-logo">{{ device.nameOrId }}</a>
+        <a href="" data-activates="mobile-dropdown" class="right dropdown-button button-collapse"><i class="material-icons">more_vert</i></a>
+
+        <!-- Wide screen menu -->
+        <ul class="right hide-on-med-and-down">
+          {{> NavbarDeviceDetailsItems }}
+        </ul>
+
+        <!-- Mobile screen menu -->
+        <ul class="dropdown-content" id="mobile-dropdown">
+          {{> NavbarDeviceDetailsItems }}
+        </ul>
+
+      </div>
+
+      <ul class="tabs">
+        <li class="tab col s3"><a class="active" href="#tabInfo">Info</a></li>
+        <li class="tab col s3"><a href="#tabZones">Zones</a></li>
+        <li class="tab col s3"><a href="#tabHistory">History</a></li>
+        <li class="tab col s3"><a href="#tabUsers">Users</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
+</template>
+
+
+<template name="NavbarDeviceDetailsItems">
+  <li><a href="" class="js-device-arm">Arm</a></li>
+  <li><a href="" class="js-device-disarm">Disarm</a></li>
+  <li><a href="" class="js-device-state">State</a></li>
+  <!-- <li class="divider"></li>
+  <li><a href="/devices/{{ device._id }}">Details</a></li> -->
+  <li class="divider"></li>
+  <li><a href="#DeviceEdit_{{ device._id }}" class="modal-trigger js-device-edit">Edit</a></li>
+  <li><a href="#DeviceRemove_{{ device._id }}" class="modal-trigger js-device-remove">Remove</a></li>
+</template>
