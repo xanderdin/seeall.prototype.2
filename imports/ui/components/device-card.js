@@ -4,6 +4,7 @@ import './device-status-line.js';
 import './modal-device-edit.js';
 import './modal-device-remove.js';
 
+import './device-card.css';
 import './device-card.html';
 
 

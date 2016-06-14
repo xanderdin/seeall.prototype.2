@@ -1,0 +1,10 @@
+.device-context-menu-btn {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+}
+
+.device-card-content {
+  position: relative;
+  top: 30px;
+}

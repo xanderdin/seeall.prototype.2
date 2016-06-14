@@ -1,4 +1,16 @@
-.zone-card {
+.zone-context-menu-btn {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+}
+
+.zone-card-content {
+  position: relative;
+  top: 16px;
+}
+
+
+/*.zone-card {
   position: relative;
 }
 
@@ -19,7 +31,7 @@
 }
 
 .zone-icon {
-  /*position: absolute;
+  position: absolute;
   top: 100%;
-  left: 100%;*/
-}
+  left: 100%;
+}*/
