@@ -6,6 +6,8 @@ import '/imports/api/devices/zones.js';
 import './modal-zone-edit.js';
 import './modal-zone-remove.js';
 
+import './zone-status-line.js';
+
 import './zone-card.css';
 import './zone-card.html';
 

@@ -9,14 +9,15 @@
         </a>
       </span>
       <div class="card-content">
+        <p class="center-align">
+          <span class="zone-name truncate">{{#if zone.name }}{{ zone.name }}{{else}}&nbsp;{{/if}}</span>
+        </p>
         <!-- <span class="zone-num">{{ formatZoneNum }}</span> -->
         <p class="center-align">
           {{{ getZoneMainIconTag }}}
         </p>
-        <p class="center-align">
-          <span class="zone-name truncate">{{#if zone.name }}{{ zone.name }}{{else}}&nbsp;{{/if}}</span>
-        </p>
       </div>
+      {{> ZoneStatusLine zone=zone }}
     </div>
   </div>
 
