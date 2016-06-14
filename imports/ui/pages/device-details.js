@@ -38,3 +38,11 @@ Template.DeviceDetails_page.helpers({
     );
   }
 });
+
+
+Template.DeviceDetails_page.events({
+  'click .js-card-device'(event) {
+    event.preventDefault();
+    FlowRouter.go('Devices.show');
+  }
+});
