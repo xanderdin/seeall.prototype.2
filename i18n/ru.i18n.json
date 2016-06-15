@@ -1,0 +1,78 @@
+{
+  "app_title": "Вижу",
+
+  "arm": "Взять",
+  "disarm": "Снять",
+  "state": "Опрос",
+  "edit": "Правка",
+  "remove": "Удалить",
+  "details": "Подробно",
+  "cancel": "Отмена",
+  "yes": "Да",
+  "no": "Нет",
+
+  "About_page": {
+    "about_app": "О приложении"
+  },
+
+  "Settings_page": {
+    "settings": "Настройки",
+    "language": "Язык"
+  },
+
+  "Help_page": {
+    "help": "Помощь"
+  },
+
+  "NavbarMain": {
+    "devices": "Приборы",
+    "settings": "Настройки",
+    "about": "О приложении",
+    "help": "Помощь"
+  },
+
+  "NavbarDeviceDetails": {
+    "info": "Инфо",
+    "zones": "Зоны",
+    "history": "История",
+    "users": "Люди"
+  },
+
+  "Devices_grid": {
+    "no_devices": "Нет приборов"
+  },
+
+  "Zones_grid": {
+    "no_zones": "Нет зон"
+  },
+
+  "History_list": {
+    "no_history": "Нет истории"
+  },
+
+  "Users_grid": {
+    "no_users": "Нет людей"
+  },
+
+  "AddNewDevice_modal": {
+    "title": "Новый прибор",
+    "name": "Название",
+    "add": "Добавить"
+  },
+
+  "DeviceEdit_modal": {
+    "name": "Название"
+  },
+
+  "DeviceRemove_modal": {
+    "remove_question": "Удалить %s?"
+  },
+
+  "ZoneEdit_modal": {
+    "name": "Название"
+  },
+
+  "ZoneRemove_modal": {
+    "remove_question": "Удалить %s?"
+  }
+}

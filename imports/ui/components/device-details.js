@@ -1,7 +1,8 @@
 import { Template } from 'meteor/templating';
 
-import './zone-card.js';
-import './history-line.js';
+import './zones-grid.js';
+import './users-grid.js';
+import './history-list.js';
 import './navbar-device-details.js';
 import './btn-floating-device-actions.js';
 

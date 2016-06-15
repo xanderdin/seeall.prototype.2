@@ -1,0 +1,78 @@
+{
+  "app_title": "See All",
+
+  "arm": "Arm",
+  "disarm": "Disarm",
+  "state": "State",
+  "edit": "Edit",
+  "remove": "Remove",
+  "details": "Details",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+
+  "About_page": {
+    "about_app": "About"
+  },
+
+  "Settings_page": {
+    "settings": "Settings",
+    "language": "Language"
+  },
+
+  "Help_page": {
+    "help": "Help"
+  },
+
+  "NavbarMain": {
+    "devices": "Devices",
+    "settings": "Settings",
+    "about": "About",
+    "help": "Help"
+  },
+
+  "NavbarDeviceDetails": {
+    "info": "Info",
+    "zones": "Zones",
+    "history": "History",
+    "users": "Users"
+  },
+
+  "Devices_grid": {
+    "no_devices": "No devices"
+  },
+
+  "Zones_grid": {
+    "no_zones": "No zones"
+  },
+
+  "History_list": {
+    "no_history": "No history"
+  },
+
+  "Users_grid": {
+    "no_users": "No users"
+  },
+
+  "AddNewDevice_modal": {
+    "title": "New Device",
+    "name": "Name",
+    "add": "Add"
+  },
+
+  "DeviceEdit_modal": {
+    "name": "Name"
+  },
+
+  "DeviceRemove_modal": {
+    "remove_question": "Remove %s?"
+  },
+
+  "ZoneEdit_modal": {
+    "name": "Name"
+  },
+
+  "ZoneRemove_modal": {
+    "remove_question": "Remove %s?"
+  }
+}

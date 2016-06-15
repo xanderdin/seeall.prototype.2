@@ -23,13 +23,13 @@
 
   <ul id="zone-context-menu-{{ zone._id }}" class="dropdown-content">
     {{#unless isZoneSiren }}
-    <li><a href="" class="js-zone-arm">Arm</a></li>
-    <li><a href="" class="js-zone-disarm">Disarm</a></li>
+    <li><a href="" class="js-zone-arm">{{_ "arm" }}</a></li>
+    <li><a href="" class="js-zone-disarm">{{_ "disarm" }}</a></li>
     <!-- <li><a href="" class="js-zone-state">State</a></li> -->
     <li class="divider"></li>
     {{/unless}}
-    <li><a href="#ZoneEdit_{{ zone._id }}" class="modal-trigger js-zone-edit">Edit</a></li>
-    <li><a href="#ZoneRemove_{{ zone._id }}" class="modal-trigger js-zone-remove">Remove</a></li>
+    <li><a href="#ZoneEdit_{{ zone._id }}" class="modal-trigger js-zone-edit">{{_ "edit" }}</a></li>
+    <li><a href="#ZoneRemove_{{ zone._id }}" class="modal-trigger js-zone-remove">{{_ "remove" }}</a></li>
   </ul>
 
   {{> ZoneEdit_modal deviceId=deviceId zone=zone }}

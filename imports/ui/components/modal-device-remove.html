@@ -2,11 +2,11 @@
 
  <div id="DeviceRemove_{{ device._id }}" class="modal">
     <div class="modal-content">
-      <h6>Remove {{ device._id }}?</h6>
+      <h6>{{_ "DeviceRemove_modal.remove_question" device._id }}</h6>
     </div>
     <div class="modal-footer">
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-device-remove-ok">Yes</a>
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">No</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-device-remove-ok">{{_ "yes" }}</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">{{_ "no" }}</a>
     </div>
   </div>
 

@@ -1,0 +1,21 @@
+<template name="Zones_grid">
+
+  <div class="row">
+
+  {{#if zones }}
+
+    {{#each zone in zones }}
+      {{> Zone_card deviceId=deviceId zone=zone }}
+    {{/each}}
+
+  {{else}}
+
+    <p class="col s12 center">
+      {{_ "Zones_grid.no_zones" }}
+    </p>
+
+  {{/if}}
+
+  </div>
+
+</template>

@@ -6,15 +6,15 @@
       <form class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <input type="text" name="deviceNewName_{{ device._id }}" id="deviceNewName_{{ device._id }}" placeholder="Name" class="validate" value="{{ device.name }}">
-            <!-- <label for="deviceNewName_{{ device._id }}">Name</label> -->
+            <input type="text" name="deviceNewName_{{ device._id }}" id="deviceNewName_{{ device._id }}" placeholder="{{_ 'DeviceEdit_modal.name' }}" class="validate" value="{{ device.name }}">
+            <!-- <label for="deviceNewName_{{ device._id }}">{{_ 'DeviceEdit_modal.name' }}</label> -->
           </div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-device-edit-ok">OK</a>
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">{{_ "cancel" }}</a>
     </div>
   </div>
 

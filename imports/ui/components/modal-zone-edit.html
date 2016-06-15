@@ -6,15 +6,15 @@
       <form class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <input type="text" name="zoneNewName_{{ zone._id }}" id="zoneNewName_{{ zone._id }}" placeholder="Name" class="validate" value="{{ zone.name }}">
-            <!-- <label for="zoneNewName_{{ zone._id }}">Name</label> -->
+            <input type="text" name="zoneNewName_{{ zone._id }}" id="zoneNewName_{{ zone._id }}" placeholder="{{_ 'ZoneEdit_modal.name' }}" class="validate" value="{{ zone.name }}">
+            <!-- <label for="zoneNewName_{{ zone._id }}">{{_ 'ZoneEdit_modal.name' }}</label> -->
           </div>
         </div>
       </form>
     </div>
     <div class="modal-footer">
       <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-zone-edit-ok">OK</a>
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">{{_ "cancel" }}</a>
     </div>
   </div>
 

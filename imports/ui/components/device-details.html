@@ -16,26 +16,22 @@
 
     <div class="col s12" id="tabZones">
 
-      <div class="row">
-        {{#each zone in device.zones }}
-          {{> Zone_card deviceId=device._id zone=zone }}
-        {{/each}}
-      </div>
+      {{> Zones_grid deviceId=device._id zones=device.zones}}
 
       <!-- {{> BtnFloating_DeviceActions device=device }} -->
 
     </div>
 
     <div class="col s12" id="tabHistory">
-      <ul class="collection">
-        {{#each record in history }}
-          {{> History_line record=record }}
-        {{/each}}
-      </ul>
+
+      {{> History_list history=history }}
+
     </div>
 
     <div class="col s12" id="tabUsers">
-      Users
+
+      {{> Users_grid users=users }}
+
     </div>
 
   </div>

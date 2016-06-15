@@ -2,7 +2,7 @@
 
   <div class="modal modal-fixed-footer" id="addNewDeviceDialog">
     <div class="modal-content">
-      <h6>New Device</h6>
+      <h6>{{_ "AddNewDevice_modal.title" }}</h6>
       <div class="row">
         <form class="col s12">
           <div class="row">
@@ -11,16 +11,16 @@
               <label for="newDeviceGid">GID</label>
             </div>
             <div class="input-field col s12">
-              <input type="text" name="newDeviceName" id="newDeviceName" placeholder="Name" class="validate">
-              <label for="newDeviceName">Name</label>
+              <input type="text" name="newDeviceName" id="newDeviceName" placeholder="{{_ 'AddNewDevice_modal.name' }}" class="validate">
+              <label for="newDeviceName">{{_ "AddNewDevice_modal.name" }}</label>
             </div>
           </div>
         </form>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-add-new-device">Add</a>
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-add-new-device">{{_ "AddNewDevice_modal.add" }}</a>
+      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">{{_ "cancel" }}</a>
     </div>
   </div>
 

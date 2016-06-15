@@ -5,7 +5,7 @@
 
       <div class="nav-wrapper blue-grey">
 
-        <a href="/" class="brand-logo">See All</a>
+        <a href="/" class="brand-logo">{{_ 'app_title' }}</a>
         <a href="" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
 
         <!-- Wide screen menu -->
@@ -27,8 +27,8 @@
 
 
 <template name="NavbarMainItems">
-  <li><a href="/devices/">Devices</a></li>
-  <li><a href="/settings/">Settings</a></li>
-  <li><a href="/about/">About</a></li>
-  <li><a href="/help/">Help</a></li>
+  <li><a href="/devices/">{{_ 'NavbarMain.devices' }}</a></li>
+  <li><a href="/settings/">{{_ 'NavbarMain.settings' }}</a></li>
+  <li><a href="/about/">{{_ 'NavbarMain.about' }}</a></li>
+  <li><a href="/help/">{{_ 'NavbarMain.help' }}</a></li>
 </template>
