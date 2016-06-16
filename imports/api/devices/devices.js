@@ -118,16 +118,26 @@ Devices.helpers({
     return MyStateColors.unspecified.styleColor;
   },
 
-  lastHistoryMessage() {
-    var msg = 'No Info';
+  // lastHistoryMessage() {
+  //   var msg = 'No Info';
+  //   var res = History.find({ deviceId: this._id }, { sort: [['createdAt', 'desc']], limit: 1 });
+  //   if (res) {
+  //     try {
+  //       msg = res.fetch()[0].info;
+  //     } catch(error) {
+  //     }
+  //   }
+  //   return msg;
+  // }
+
+  lastHistoryText() {
     var res = History.find({ deviceId: this._id }, { sort: [['createdAt', 'desc']], limit: 1 });
     if (res) {
       try {
-        msg = res.fetch()[0].info;
+        return res.fetch()[0].text();
       } catch(error) {
       }
     }
-    return msg;
+    return '';
   }
-
 });

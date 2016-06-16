@@ -10,6 +10,8 @@
   "cancel": "Отмена",
   "yes": "Да",
   "no": "Нет",
+  "no_info": "Нет иформации",
+  "no_such_device": "Нет такого прибора",
 
   "About_page": {
     "about_app": "О приложении"
@@ -74,5 +76,18 @@
 
   "ZoneRemove_modal": {
     "remove_question": "Удалить %s?"
+  },
+
+  "History": {
+    "device_added": "Прибор добавлен; П:__user_name__",
+    "device_name_set": "Прибор назван '__device_new_name__'; П:__user_name__",
+    "device_removed": "Прибор удален; П:__user_name__",
+    "zone_name_set": "Зона __zone_num__ названа '__zone_new_name__'; П: __user_name__",
+    "zone_removed": "Зона __zone_num__ удалена; П:__user_name__",
+    "user_added": "Добавлен пользователь: __user_name__",
+    "user_removed": "Удален пользователь: __user_name__",
+    "cmd_get_state": "Опрос; П:__user_name__",
+    "cmd_arm": "Взять __zones_ranges__; П:__user_name__",
+    "cmd_disarm": "Снять __zones_ranges__; П:__user_name__"
   }
 }

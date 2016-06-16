@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Devices } from '/imports/api/devices/devices.js';
 import { History } from '/imports/api/history/history.js';
 
+import '/imports/api/devices/zones.js';
+
 
 Meteor.methods({
 
@@ -51,7 +53,14 @@ Meteor.methods({
           if (error) {
             //code
           } else {
-            Meteor.call('writeHistory', userId, device._id, 'New device');
+            // Meteor.call('writeHistory', userId, device._id, 'New device');
+            Meteor.call(
+              'writeHistory',
+              {
+                event: 'History.device_added',
+                deviceId: device._id
+              }
+            );
           }
         }
       );
@@ -80,7 +89,14 @@ Meteor.methods({
         if (error) {
           //code
         } else {
-          Meteor.call('writeHistory', userId, device._id, 'User added');
+          // Meteor.call('writeHistory', userId, device._id, 'User added');
+          Meteor.call(
+            'writeHistory',
+            {
+              event: 'History.user_added',
+              deviceId: device._id
+            }
+          );
         }
       }
     );
@@ -122,11 +138,19 @@ Meteor.methods({
         if (error) {
           //code
         } else {
+          // Meteor.call(
+          //   'writeHistory',
+          //   userId,
+          //   device._id,
+          //   'New name: ' + device.name
+          // );
           Meteor.call(
             'writeHistory',
-            userId,
-            device._id,
-            'New name: ' + device.name
+            {
+              event: 'History.device_name_set',
+              deviceId: device._id,
+              deviceNewName: device.name
+            }
           );
         }
       }
@@ -134,26 +158,26 @@ Meteor.methods({
   },
 
 
-  removeDevice: function(devId) {
+  removeDevice: function(deviceId) {
 
     // if (!this.userId) {
     //   throw new Meteor.Error('not-logged-in', 'Must be logged in before removing a device.');
     // }
     //
-    // check(devId, String);
+    // check(deviceId, String);
 
     var userId = '';
     // var userId = this.userId;
     //
     // // Check if user is owning this device
-    // var d = Devices.findOne({ _id: devId, "users._id": this.userId });
+    // var d = Devices.findOne({ _id: deviceId, "users._id": this.userId });
     //
     // if (!d) { // Don't remove if user is not owning this device
     //   return;
     // }
 
     // Check if there're other users owning this device
-    var dd = Devices.find(devId).fetch();
+    var dd = Devices.find(deviceId).fetch();
 
     var isMultiusers = false;
 
@@ -167,7 +191,7 @@ Meteor.methods({
 
     if (isMultiusers) { // Remove user from device
       Devices.update(
-        devId,
+        deviceId,
         {
           $pull: {
             users: {
@@ -180,18 +204,32 @@ Meteor.methods({
           if (error) {
             //code
           } else {
-            Meteor.call('writeHistory', userId, devId, 'User removed');
+            // Meteor.call('writeHistory', userId, deviceId, 'User removed');
+            Meteor.call(
+              'writeHistory',
+              {
+                event: 'History.user_removed',
+                deviceId: deviceId
+              }
+            );
           }
         }
       );
     } else { // Remove device
       Devices.remove(
-        devId,
+        deviceId,
         function(error) {
           if (error) {
             //code
           } else {
-            Meteor.call('writeHistory', userId, devId, 'Device removed');
+            // Meteor.call('writeHistory', userId, deviceId, 'Device removed');
+            Meteor.call(
+              'writeHistory',
+              {
+                event: 'History.device_removed',
+                deviceId: deviceId
+              }
+            );
           }
         }
       );
@@ -199,7 +237,7 @@ Meteor.methods({
   },
 
 
-  getDeviceState: function(devId) {
+  getDeviceState: function(deviceId) {
 
     var userId = '';
 
@@ -207,19 +245,26 @@ Meteor.methods({
     //   throw new Meteor.Error('not-logged-in', 'Must be logged in before using a device.');
     // }
 
-    Meteor.call('writeHistory', userId, devId, 'Get state');
+    // Meteor.call('writeHistory', userId, deviceId, 'Get state');
+    Meteor.call(
+      'writeHistory',
+      {
+        event: 'History.cmd_get_state',
+        deviceId: deviceId
+      }
+    );
 
   },
 
 
-  setDeviceArmed: function(devId, isArmed) {
+  setDeviceArmed: function(deviceId, isArmed) {
 
     var userId = '';
     // if (!this.userId) {
     //   throw new Meteor.Error('not-logged-in', 'Must be logged in before using a device.');
     // }
 
-    Devices.find(devId).forEach(function(device) {
+    Devices.find(deviceId).forEach(function(device) {
 
       if (device.zones) {
         var zonesIds = [];
@@ -232,11 +277,19 @@ Meteor.methods({
         var zonesRanges = makeZonesRanges(zonesIds);
 
         // Meteor.call('writeHistory', userId, device._id, isArmed ? 'Arm ' + zonesIds : 'Disarm ' + zonesIds);
-        Meteor.call('writeHistory', userId, device._id, isArmed ? 'Arm ' + zonesRanges : 'Disarm ' + zonesRanges);
+        // Meteor.call('writeHistory', userId, device._id, isArmed ? 'Arm ' + zonesRanges : 'Disarm ' + zonesRanges);
+        Meteor.call(
+          'writeHistory',
+          {
+            event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
+            deviceId: device._id,
+            zonesRanges: zonesRanges
+          }
+        );
         device.zones.forEach(function(zone) {
           Devices.update(
             {
-              _id: devId,
+              _id: deviceId,
               zones:
                 {
                   $elemMatch:
@@ -263,7 +316,7 @@ Meteor.methods({
   },
 
 
-  setZoneArmed: function(devId, zoneId, isArmed) {
+  setZoneArmed: function(deviceId, zoneId, isArmed) {
 
     var userId = '';
     // if (!this.userId) {
@@ -271,14 +324,14 @@ Meteor.methods({
     // }
 
     // Check if user is owning this device
-    // var d = Devices.findOne({ _id: devId, "users._id": this.userId});
+    // var d = Devices.findOne({ _id: deviceId, "users._id": this.userId});
     // if (!d) { // Don't act if user is not owning this device
     //   return;
     // }
 
     Devices.update(
       {
-        _id: devId,
+        _id: deviceId,
         zones: { $elemMatch: { _id: zoneId, type: { $ne: 'siren' } } }
       },
       {
@@ -286,21 +339,29 @@ Meteor.methods({
       },
       function(error, result) {
         if (result > 0) {
-          Meteor.call('writeHistory', userId, devId,
-            isArmed ? 'Arm ' + zoneId : 'Disarm ' + zoneId);
+          // Meteor.call('writeHistory', userId, deviceId,
+          //   isArmed ? 'Arm ' + zoneId : 'Disarm ' + zoneId);
+          Meteor.call(
+            'writeHistory',
+            {
+              event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
+              deviceId: deviceId,
+              zonesRanges: zoneId
+            }
+          );
         }
       }
     );
   },
 
 
-  updateZone: function(devId, zone) {
+  updateZone: function(deviceId, zone) {
 
     // if (!this.userId) {
     //   throw new Meteor.Error('not-logged-in', 'Must be logged in before updating a zone.');
     // }
 
-    // check(devId, String);
+    // check(deviceId, String);
     // check(
     //   zone,
     //   {
@@ -313,52 +374,69 @@ Meteor.methods({
     // var userId = this.userId;
     //
     // // Check if user is owning this device
-    // var d = Devices.findOne({ _id: devId, "users._id": this.userId });
+    // var d = Devices.findOne({ _id: deviceId, "users._id": this.userId });
     //
     // if (!d) { // Don't update if user is not owning this device
     //   return;
     // }
 
     Devices.update(
-      { _id: devId, "zones._id": zone._id },
+      { _id: deviceId, "zones._id": zone._id },
       { $set: { "zones.$.name": zone.name } },
       function(error, result) {
         if (error) {
           //code
         } else {
-          Meteor.call('writeHistory', userId, devId,
-            'New name for zone ' + zone._id + ': ' + zone.name);
+          // Meteor.call('writeHistory', userId, deviceId,
+          //   'New name for zone ' + zone._id + ': ' + zone.name);
+          Meteor.call(
+            'writeHistory',
+            {
+              event: 'History.zone_name_set',
+              deviceId: deviceId,
+              zoneId: zone._id,
+              zoneNewName: zone.name
+            }
+          );
         }
       }
     );
   },
 
 
-  removeZone: function(devId, zoneId) {
+  removeZone: function(deviceId, zoneId) {
 
     // if (!this.userId) {
     //   throw new Meteor.Error('not-logged-in', 'Must be logged in before removing a zone.');
     // }
 
-    // check(devId, String);
+    // check(deviceId, String);
     // check(zoneId, Match.Integer);
 
     var userId = '';
     // var userId = this.userId;
 
     // Check if user is owning this device
-    // var d = Devices.findOne({ _id: devId, "users._id": this.userId });
+    // var d = Devices.findOne({ _id: deviceId, "users._id": this.userId });
     //
     // if (!d) { // Don't remove if user is not owning this device
     //   return;
     // }
 
-    Devices.update(devId,
+    Devices.update(deviceId,
       {
         $pull: { zones: { _id: zoneId } }
       },
       function(error, result) {
-        Meteor.call('writeHistory', userId, devId, 'Remove zone ' + zoneId);
+        // Meteor.call('writeHistory', userId, deviceId, 'Remove zone ' + zoneId);
+        Meteor.call(
+          'writeHistory',
+          {
+            event: 'History.zone_removed',
+            deviceId: deviceId,
+            zoneId: zoneId
+          }
+        );
       }
     );
   }
@@ -368,20 +446,22 @@ Meteor.methods({
 
 var makeZonesRanges = function(zonesNums) {
 
+  // FIXME: 01-01,03-14,16-16
+
   var res = '';
   var prev;
 
   zonesNums.forEach(function(id) {
     if (res === '') {
-      res = '' + id;
+      res = '' + formatZoneNum(id);
     } else if (prev !== id - 1) {
-      res += ('-' + prev + ',' + id);
+      res += ('-' + formatZoneNum(prev) + ',' + formatZoneNum(id));
     }
     prev = id;
   });
 
   if (zonesNums.length > 1 && prev) {
-    res += ('-' + prev);
+    res += ('-' + formatZoneNum(prev));
   }
 
   return res;

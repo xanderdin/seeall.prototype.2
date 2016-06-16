@@ -22,7 +22,12 @@
         </div>
         <div class="row">
           <div class="col s12 truncate center">
-            {{ device.lastHistoryMessage }}
+            {{#if device.lastHistoryText }}
+              <!-- {{_ device.lastHistoryText.event device.lastHistoryText.param }} -->
+              {{ device.lastHistoryText }}
+            {{else}}
+              {{_ "no_info" }}
+            {{/if}}
           </div>
         </div>
         {{#if deviceDetails }}

@@ -35,7 +35,7 @@ Template.DeviceDetails_page.helpers({
     return History.find(
       { deviceId: Template.instance().getDeviceId() },
       { sort: [['createdAt', 'desc']], limit: 300 }
-    );
+    ).fetch();
   }
 });
 
