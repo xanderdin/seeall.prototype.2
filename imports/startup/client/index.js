@@ -9,11 +9,26 @@ import './helpers.js';
 getUserLanguage = function() {
   // TODO: logic for determining the user language
 
-  return 'ru';
+  var browserLang = window.navigator.userLanguage
+    || window.navigator.language || window.navigator.browserLanguage;
+
+  console.log(browserLang);
+
+  var key;
+
+  for (key in TAPi18n.getLanguages()) {
+    if (browserLang.match(key)) {
+      console.log(key);
+      return key;
+    }
+  }
+
+  return 'en';
 };
 
 
 Meteor.startup(function() {
+
   Session.set('showLoadingIndicator', true);
 
   TAPi18n.setLanguage(getUserLanguage())
