@@ -1,5 +1,44 @@
 formatZoneNum = function(num) {
-  return num < 10 ? '0' + num : num;
+  return num < 10 ? '0' + num : '' + num;
+};
+
+
+makeZonesRanges = function(zonesNums) {
+
+  var res = '';
+  var i = 0;
+  var j = 0;
+
+  for (; i < zonesNums.length; i++) {
+
+    // Simply add first number to response
+    if (i === 0) {
+      res = formatZoneNum(zonesNums[i]);
+      j++;
+      continue;
+    }
+
+    var prev_i = i - 1;
+
+    if (zonesNums[prev_i] === zonesNums[i] - 1) { // In sequence
+      if (i === zonesNums.length - 1) { // Last element
+        var ch = j > 0 ? (j === 1 ? ',' : '-') : ',';
+        res += (ch + formatZoneNum(zonesNums[i]));
+      } else {
+        j++;
+      }
+    } else { // Out of sequence
+      if (j > 0 && prev_i > 0) { // But was in sequence (&& previous is not first)
+        var ch = j === 1 ? ',' : '-';
+        res += (ch + formatZoneNum(zonesNums[prev_i]));
+      }
+      res += (',' + formatZoneNum(zonesNums[i]));
+      j = 0;
+    }
+
+  }
+
+  return res;
 };
 
 

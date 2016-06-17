@@ -2,8 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Devices } from '/imports/api/devices/devices.js';
 import { History } from '/imports/api/history/history.js';
 
-import '/imports/api/devices/zones.js';
-
 
 Meteor.methods({
 
@@ -274,7 +272,7 @@ Meteor.methods({
           }
         });
 
-        var zonesRanges = makeZonesRanges(zonesIds);
+        // var zonesRanges = makeZonesRanges(zonesIds);
 
         // Meteor.call('writeHistory', userId, device._id, isArmed ? 'Arm ' + zonesIds : 'Disarm ' + zonesIds);
         // Meteor.call('writeHistory', userId, device._id, isArmed ? 'Arm ' + zonesRanges : 'Disarm ' + zonesRanges);
@@ -283,7 +281,8 @@ Meteor.methods({
           {
             event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
             deviceId: device._id,
-            zonesRanges: zonesRanges
+            // zonesRanges: zonesRanges
+            zonesIds: zonesIds
           }
         );
         device.zones.forEach(function(zone) {
@@ -341,12 +340,14 @@ Meteor.methods({
         if (result > 0) {
           // Meteor.call('writeHistory', userId, deviceId,
           //   isArmed ? 'Arm ' + zoneId : 'Disarm ' + zoneId);
+          var zonesIds = [];
+          zonesIds.push(zoneId);
           Meteor.call(
             'writeHistory',
             {
               event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
               deviceId: deviceId,
-              zonesRanges: zoneId
+              zonesIds: zonesIds
             }
           );
         }
@@ -442,27 +443,3 @@ Meteor.methods({
   }
 
 });
-
-
-var makeZonesRanges = function(zonesNums) {
-
-  // FIXME: 01-01,03-14,16-16
-
-  var res = '';
-  var prev;
-
-  zonesNums.forEach(function(id) {
-    if (res === '') {
-      res = '' + formatZoneNum(id);
-    } else if (prev !== id - 1) {
-      res += ('-' + formatZoneNum(prev) + ',' + formatZoneNum(id));
-    }
-    prev = id;
-  });
-
-  if (zonesNums.length > 1 && prev) {
-    res += ('-' + formatZoneNum(prev));
-  }
-
-  return res;
-};

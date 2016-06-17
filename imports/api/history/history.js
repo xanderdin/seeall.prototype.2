@@ -54,7 +54,7 @@ History.helpers({
       case 'History.cmd_disarm':
         options = {
           user_name: getUsername(this.userId),
-          zones_ranges: this.zonesRanges
+          zones_ranges: makeZonesRanges(this.zonesIds)
         };
         break;
       case 'History.zone_name_set':
