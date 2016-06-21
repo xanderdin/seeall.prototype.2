@@ -1,5 +1,6 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+import { AccountsTemplates } from 'meteor/useraccounts:core';
 
 import '/imports/ui/layouts/app-body.js';
 
@@ -19,6 +20,7 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/devices/', {
   name: 'Devices.show',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params, queryParams) {
     BlazeLayout.render('App_body', { main: 'Devices_page' });
   }
@@ -26,6 +28,7 @@ FlowRouter.route('/devices/', {
 
 FlowRouter.route('/devices/:_id', {
   name: 'DeviceDetails.show',
+  triggersEnter: [AccountsTemplates.ensureSignedIn],
   action(params, queryParams) {
     BlazeLayout.render('App_body', { main: 'DeviceDetails_page' } );
   }
@@ -51,3 +54,10 @@ FlowRouter.route('/help/', {
     BlazeLayout.render('App_body', { main: 'Help_page' });
   }
 });
+
+
+AccountsTemplates.configureRoute('signIn');
+AccountsTemplates.configureRoute('signUp');
+AccountsTemplates.configureRoute('resetPwd');
+// AccountsTemplates.configureRoute('forgotPwd');
+// AccountsTemplates.configureRoute('changePwd');

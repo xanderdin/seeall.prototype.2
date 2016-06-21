@@ -31,4 +31,15 @@
   <li><a href="/settings/">{{_ 'NavbarMain.settings' }}</a></li>
   <li><a href="/about/">{{_ 'NavbarMain.about' }}</a></li>
   <li><a href="/help/">{{_ 'NavbarMain.help' }}</a></li>
+  <!-- <li>{{> atNavButton }}</li> -->
+  <li>{{> AtNavLink '' }}</li>
+</template>
+
+
+<template name="AtNavLink">
+  {{#if currentUser }}
+    <a href="" class="js-logout">{{_ 'logout' }}</a>
+  {{else}}
+    <a href="/sign-in">{{_ 'login' }}</a>
+  {{/if}}
 </template>

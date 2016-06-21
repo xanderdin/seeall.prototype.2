@@ -12,6 +12,8 @@
   "no": "No",
   "no_info": "No Info",
   "no_such_device": "No such device",
+  "login": "Sign In",
+  "logout": "Sign Off",
 
   "About_page": {
     "about_app": "About"

@@ -1,6 +1,5 @@
 import { Template } from 'meteor/templating';
 import { TAPi18n } from 'meteor/tap:i18n';
-import { Session } from 'meteor/session';
 
 import '/imports/ui/components/navbar-main.js';
 
@@ -41,18 +40,8 @@ Template.Settings_page.events({
 
   'change #js-language'(event, instance) {
 
-    var selectedLang = event.target.value;
+    setUiLanguage(event.target.value);
 
-    Session.set('showLoadingIndicator', true);
-
-    TAPi18n.setLanguage(selectedLang)
-      .done(function() {
-        prefClientLanguage.set(selectedLang);
-        Session.set('showLoadingIndicator', false);
-      })
-      .fail(function(errorMessage) {
-        // Handle the situation
-        console.log(errorMessage);
-      });
   }
+
 });
