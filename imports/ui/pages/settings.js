@@ -47,6 +47,7 @@ Template.Settings_page.events({
 
     TAPi18n.setLanguage(selectedLang)
       .done(function() {
+        prefClientLanguage.set(selectedLang);
         Session.set('showLoadingIndicator', false);
       })
       .fail(function(errorMessage) {

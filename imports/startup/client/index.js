@@ -2,23 +2,22 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { TAPi18n } from 'meteor/tap:i18n';
 
+import { PreferenceVar } from 'meteor/3stack:preferences';
+import { LocalPreferenceStore } from 'meteor/3stack:preferences-local-storage';
+
 import './routes.js';
 import './helpers.js';
 
 
-getUserLanguage = function() {
-  // TODO: logic for determining the user language
+getBrowserLanguage = function() {
 
   var browserLang = window.navigator.userLanguage
     || window.navigator.language || window.navigator.browserLanguage;
-
-  console.log(browserLang);
 
   var key;
 
   for (key in TAPi18n.getLanguages()) {
     if (browserLang.match(key)) {
-      console.log(key);
       return key;
     }
   }
@@ -29,9 +28,12 @@ getUserLanguage = function() {
 
 Meteor.startup(function() {
 
+  prefClientLanguage = new PreferenceVar('clientLanguage', getBrowserLanguage(), LocalPreferenceStore);
+
   Session.set('showLoadingIndicator', true);
 
-  TAPi18n.setLanguage(getUserLanguage())
+  // TAPi18n.setLanguage(getBrowserLanguage())
+  TAPi18n.setLanguage(prefClientLanguage.get())
     .done(function() {
       Session.set('showLoadingIndicator', false);
     })
