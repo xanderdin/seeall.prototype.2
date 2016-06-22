@@ -4,21 +4,29 @@
 
   <h4>{{_ "Settings_page.settings" }}</h4>
   <div class="row">
-
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s12 m6 l4">
-          <select id="js-language">
-            {{#each lang in languages }}
-              <option value="{{ lang._id }}" selected="{{ lang.selected }}">{{ lang.name }}</option>
-            {{/each}}
-          </select>
-          <label>{{_ "Settings_page.language" }}</label>
+    <div class="col s12 m6 l4">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">{{_ "Settings_page.common" }}</span>
+          <p>
+            <form>
+              <div class="row">
+                <div class="input-field col s12">
+                  <select id="js-language">
+                    {{#each lang in languages }}
+                    <option value="{{ lang._id }}" selected="{{ lang.selected }}">{{ lang.name }}</option>
+                    {{/each}}
+                  </select>
+                  <label>{{_ "Settings_page.language" }}</label>
+                </div>
+              </div>
+            </form>
+          </p>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 
-  <p>TODO</p>
+  <!-- <p>TODO</p> -->
 
 </template>
