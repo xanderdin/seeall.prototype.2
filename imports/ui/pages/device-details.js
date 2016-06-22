@@ -20,6 +20,7 @@ Template.DeviceDetails_page.onCreated(function() {
   this.autorun(() => {
     this.subscribe('devices', this.getDeviceId());
     this.subscribe('history', this.getDeviceId());
+    this.subscribe('usersList', this.getDeviceId());
   });
 });
 
@@ -36,6 +37,9 @@ Template.DeviceDetails_page.helpers({
       { deviceId: Template.instance().getDeviceId() },
       { sort: [['createdAt', 'desc']], limit: 300 }
     ).fetch();
+  },
+  usersList() {
+    return Meteor.users.find();
   }
 });
 

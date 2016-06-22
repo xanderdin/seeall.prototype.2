@@ -20,9 +20,9 @@ Meteor.methods({
 
   writeHistory: function(data) {
 
-    // if (Meteor.isClient() && !this.userId) {
-    //   throw new Meteor.Error('not-logged-in', 'Must be logged in before writting to history.');
-    // }
+    if (Meteor.isClient && !this.userId) {
+      throw new Meteor.Error('not-logged-in', 'Must be logged in before writting to history.');
+    }
 
     var record = {
       createdAt: new Date()

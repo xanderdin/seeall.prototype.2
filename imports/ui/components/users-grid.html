@@ -2,17 +2,19 @@
 
   <div class="row">
 
-    {{#if users }}
+  {{#if usersList }}
 
-      Users
+    {{#each user in usersList }}
+      {{> User_card deviceId=deviceId user=user }}
+    {{/each}}
 
-    {{else}}
+  {{else}}
 
       <p class="col s12 center">
         {{_ "Users_grid.no_users" }}
       </p>
 
-    {{/if}}
+  {{/if}}
 
   </div>
 
