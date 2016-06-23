@@ -21,7 +21,10 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/devices/', {
   name: 'Devices.show',
-  triggersEnter: [ function() { Meteor.reconnect(); }, AccountsTemplates.ensureSignedIn],
+  triggersEnter: [
+     function() { Meteor.reconnect(); },
+     AccountsTemplates.ensureSignedIn
+   ],
   action(params, queryParams) {
     BlazeLayout.render('App_body', { main: 'Devices_page' });
   }
@@ -29,7 +32,10 @@ FlowRouter.route('/devices/', {
 
 FlowRouter.route('/devices/:_id', {
   name: 'DeviceDetails.show',
-  triggersEnter: [function() { Meteor.reconnect(); }, AccountsTemplates.ensureSignedIn],
+  triggersEnter: [
+    function() { Meteor.reconnect(); },
+    AccountsTemplates.ensureSignedIn
+  ],
   action(params, queryParams) {
     BlazeLayout.render('App_body', { main: 'DeviceDetails_page' } );
   }
