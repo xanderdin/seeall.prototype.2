@@ -6,6 +6,7 @@ import './modal-device-remove.html';
 
 Template.DeviceRemove_modal.events({
   'click .js-device-remove-ok'(event, instance) {
+    Meteor.reconnect();
     Meteor.call('removeDevice', this.device._id);
   }
 });

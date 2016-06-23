@@ -12,6 +12,7 @@ Template.AddNewDevice_modal.events({
     var newDeviceName = instance.$('#newDeviceName');
 
     if (newDeviceGid.val()) {
+      Meteor.reconnect();
       Meteor.call(
         'addNewDevice',
         {

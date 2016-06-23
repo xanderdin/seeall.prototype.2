@@ -15,6 +15,7 @@ Template.ZoneEdit_modal.events({
   'click .js-zone-edit-ok'(event, instance) {
     var newName = instance.$('#zoneNewName_' + this.zone._id).val();
     this.zone.name = newName;
+    Meteor.reconnect();
     Meteor.call('updateZone', this.deviceId, this.zone);
   }
 });

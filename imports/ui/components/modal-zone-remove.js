@@ -13,6 +13,7 @@ Template.ZoneRemove_modal.helpers({
 
 Template.ZoneRemove_modal.events({
   'click .js-zone-remove-ok'(event, instance) {
+    Meteor.reconnect();
     Meteor.call('removeZone', this.deviceId, this.zone._id);
   }
 });

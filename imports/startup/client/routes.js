@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import { AccountsTemplates } from 'meteor/useraccounts:core';
@@ -20,7 +21,7 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/devices/', {
   name: 'Devices.show',
-  triggersEnter: [AccountsTemplates.ensureSignedIn],
+  triggersEnter: [ function() { Meteor.reconnect(); }, AccountsTemplates.ensureSignedIn],
   action(params, queryParams) {
     BlazeLayout.render('App_body', { main: 'Devices_page' });
   }
@@ -28,7 +29,7 @@ FlowRouter.route('/devices/', {
 
 FlowRouter.route('/devices/:_id', {
   name: 'DeviceDetails.show',
-  triggersEnter: [AccountsTemplates.ensureSignedIn],
+  triggersEnter: [function() { Meteor.reconnect(); }, AccountsTemplates.ensureSignedIn],
   action(params, queryParams) {
     BlazeLayout.render('App_body', { main: 'DeviceDetails_page' } );
   }

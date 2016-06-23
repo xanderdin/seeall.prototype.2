@@ -65,10 +65,12 @@ Template.Zone_card.helpers({
 Template.Zone_card.events({
   'click .js-zone-arm'(event) {
     event.preventDefault();
+    Meteor.reconnect();
     Meteor.call('setZoneArmed', this.deviceId, this.zone._id, true);
   },
   'click .js-zone-disarm'(event) {
     event.preventDefault();
+    Meteor.reconnect();
     Meteor.call('setZoneArmed', this.deviceId, this.zone._id, false);
   }
   // 'click .js-zone-edit'(event) {

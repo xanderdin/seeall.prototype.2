@@ -8,6 +8,7 @@ Template.DeviceEdit_modal.events({
   'click .js-device-edit-ok'(event, instance) {
     var newName = instance.$('#deviceNewName_' + this.device._id).val();
     this.device.name = newName;
+    Meteor.reconnect();
     Meteor.call('updateDevice', this.device);
   }
 });
