@@ -46,7 +46,7 @@ Meteor.startup(function() {
 			name: 'Home',
 			isOnline: true,
 			isTamperOpen: false,
-			isBatteryLow: false,
+			isBatteryLow: true,
 			isPowerLost: false,
 			isFailure: false,
 			isOff: false,
@@ -60,7 +60,7 @@ Meteor.startup(function() {
 					//type:
 					name: 'Door',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
 					isTamperOpen: false,
@@ -74,7 +74,7 @@ Meteor.startup(function() {
 					//type:
 					name: 'Entrance',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
 					isTamperOpen: false,
@@ -88,7 +88,7 @@ Meteor.startup(function() {
 					//type:
 					name: 'Living room',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
 					isTamperOpen: false,
@@ -102,7 +102,7 @@ Meteor.startup(function() {
 					//type:
 					name: 'Bed room',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
 					isTamperOpen: false,
@@ -132,7 +132,7 @@ Meteor.startup(function() {
 					//type:
 					name: 'Gates',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
 					isTamperOpen: false,
@@ -146,7 +146,7 @@ Meteor.startup(function() {
 					//type:
 					name: 'Front',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
 					isTamperOpen: false,
@@ -160,10 +160,10 @@ Meteor.startup(function() {
 					//type:
 					name: 'Side',
 					//state:
-					isArmed: false,
+					isArmed: true,
 					isFired: false,
 					//isInAlarm: false,
-					isTamperOpen: false,
+					isTamperOpen: true,
 					isBatteryLow: false,
 					isPowerLost: false,
 					isLinkLost: false,
@@ -179,7 +179,7 @@ Meteor.startup(function() {
 					//isInAlarm: false,
 					isTamperOpen: false,
 					isBatteryLow: false,
-					isPowerLost: false,
+					isPowerLost: true,
 					isLinkLost: false,
 					isFailure: false
 				}
