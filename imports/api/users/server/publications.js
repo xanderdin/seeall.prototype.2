@@ -48,5 +48,5 @@ Meteor.publishComposite('usersList', function(deviceId) {
         ]
       }
     ]
-  }
+  };
 });

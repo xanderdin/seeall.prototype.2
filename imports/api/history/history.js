@@ -80,7 +80,7 @@ History.helpers({
         break;
 
       case 'History.user_added':
-        optiont = {
+        options = {
           user_name: getUsername(this.userId)
         };
         break;

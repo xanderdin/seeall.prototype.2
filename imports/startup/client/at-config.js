@@ -22,8 +22,9 @@ AccountsTemplates.configure({
 
 
 // Allow login with Username or Email
-var pwd = AccountsTemplates.removeField('password');
-AccountsTemplates.removeField('email');
+var emailField = AccountsTemplates.removeField('email');
+var passwordField = AccountsTemplates.removeField('password');
+
 AccountsTemplates.addFields([
   {
     _id: 'username',
@@ -33,13 +34,6 @@ AccountsTemplates.addFields([
     minLength: 5,
     maxLength: 128
   },
-  {
-    _id: 'email',
-    type: 'email',
-    required: true,
-    displayName: 'email',
-    re: /.+@(.+){2,}\.(.+){2,}/,
-    maxLength: 128
-  },
-  pwd
+  emailField,
+  passwordField
 ]);
