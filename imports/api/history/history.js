@@ -31,14 +31,14 @@ History.helpers({
 
       case 'History.device_added':
         options = {
-          user_name: getUsername(this.userId),
+          user_name: this.username, //getUsername(this.userId),
           device_id: this.deviceId
         };
         break;
 
       case 'History.device_name_set':
         options = {
-          user_name: getUsername(this.userId),
+          user_name: this.username, //getUsername(this.userId),
           device_new_name: this.deviceNewName
         };
         break;
@@ -46,27 +46,27 @@ History.helpers({
       case 'History.user_removed':
       case 'History.device_removed':
         options = {
-          user_name: getUsername(this.userId)
+          user_name: this.username //getUsername(this.userId)
         };
         break;
 
       case 'History.cmd_get_state':
         options = {
-          user_name: getUsername(this.userId)
+          user_name: this.username //getUsername(this.userId)
         };
         break;
 
       case 'History.cmd_arm':
       case 'History.cmd_disarm':
         options = {
-          user_name: getUsername(this.userId),
+          user_name: this.username, //getUsername(this.userId),
           zones_ranges: makeZonesRanges(this.zonesIds)
         };
         break;
 
       case 'History.zone_name_set':
         options = {
-          user_name: getUsername(this.userId),
+          user_name: this.username, //getUsername(this.userId),
           zone_num: formatZoneNum(this.zoneId),
           zone_new_name: this.zoneNewName
         };
@@ -74,14 +74,14 @@ History.helpers({
 
       case 'History.zone_removed':
         options = {
-          user_name: getUsername(this.userId),
+          user_name: this.username, //getUsername(this.userId),
           zone_num: formatZoneNum(this.zoneId)
         };
         break;
 
       case 'History.user_added':
         options = {
-          user_name: getUsername(this.userId)
+          user_name: this.username, //getUsername(this.userId)
         };
         break;
 

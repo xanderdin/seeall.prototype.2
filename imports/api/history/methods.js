@@ -30,6 +30,10 @@ Meteor.methods({
 
     if (this.userId) {
       record.userId = this.userId;
+      var u = Meteor.user();
+      if (u && u.username) {
+        record.username = u.username;
+      }
     }
 
     var key;
@@ -37,7 +41,7 @@ Meteor.methods({
     for (key in data) {
 
       // don't overwrite fields set inside this function
-      if (key === 'createdAt' || key === 'userId') {
+      if (key === 'createdAt' || key === 'userId' || key === 'username') {
         continue;
       }
 
