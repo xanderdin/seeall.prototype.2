@@ -21,7 +21,7 @@ Template.Devices_page.onCreated(function() {
 
 Template.Devices_page.helpers({
   devices() {
-    return Devices.find({});
+    return Devices.find().fetch();
   }
 });
 
