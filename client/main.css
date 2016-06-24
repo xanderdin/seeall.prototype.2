@@ -1,1 +1,6 @@
 /* CSS declarations go here */
+
+/* Login/register form title */
+.at-title > h3 {
+  font-size: 2em;
+}
