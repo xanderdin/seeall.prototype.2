@@ -1,47 +1,33 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Devices } from '/imports/api/devices/devices.js';
+import { Owners } from '/imports/api/owners/owners.js';
 
 
-Meteor.publishComposite('usersList', function(deviceId) {
-
-  // if (!this.userId) {
-  //   return this.ready();
-  // }
-
-  // return Meteor.users.find({}, { fields: { _id: 1, username: 1 } });
-
+Meteor.publishComposite('users', function() {
   return {
     find: function() {
-      // We need to return only users of the same devices which the current
-      // user owns. First, we select the current user himself.
-      return Meteor.users.find({ _id: this.userId }, { fields: { _id: 1 } });
+      // Find all devices belonging to the user
+      return Owners.find(
+        { userId: this.userId },
+        { fields: { deviceId: 1 }}
+      );
     },
     children: [
       {
-        find: function(user) {
-          // For the selected user we select a specified device or all devices
-          // belonging to him.
-          var qry;
-          if (deviceId) {
-            qry = { _id: deviceId, "users._id": user._id };
-          } else {
-            qry = { "users._id": user._id };
-          }
-          return Devices.find(qry, { fields: { _id: 1, users: 1 } });
+        find: function(device) {
+          // Find all owners of those devices
+          return Owners.find(
+            { deviceId: device.deviceId },
+            { fields: { userId: 1 } }
+          );
         },
         children: [
           {
-            find: function(device) {
-              // For the selected devices we select users sharing those
-              // devices.
-              var usersIds = [];
-              device.users.forEach(function(user) {
-                usersIds.push(user._id);
-              });
+            find: function(owner) {
+              // Finally find all those owners in users table
               return Meteor.users.find(
-                { _id: { $in: usersIds } },
-                { fields: { _id: 1, username: 1 } }
+                { _id: owner.userId },
+                { fields: { _id: 1, username: 1 }}
               );
             }
           }

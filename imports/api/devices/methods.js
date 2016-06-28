@@ -1,11 +1,14 @@
 import { Meteor } from 'meteor/meteor';
+
 import { Devices } from '/imports/api/devices/devices.js';
 import { History } from '/imports/api/history/history.js';
+import { Owners } from '/imports/api/owners/owners.js';
+import { Zones } from '/imports/api/zones/zones.js';
 
 
 Meteor.methods({
 
-  addNewDevice: function(device) {
+  addNewDevice: function(newDevice) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -14,97 +17,80 @@ Meteor.methods({
       );
     }
 
-    // // TODO: check for gid validity
-    // check(
-    //   device,
-    //   {
-    //     _id: String,
-    //     name: Match.Maybe(String)
-    //   }
-    // );
+    // Check if device is already present in DB
+    var oldDevice = Devices.findOne(
+      { _id: newDevice._id },
+      { fields: { _id: 1 }}
+    );
 
-    if (device._id.length !== 12) {
-      throw new Meteor.Error(
-        'device-gid-required',
-        'Valid device GID required'
+    if (oldDevice) { // device is in DB
+
+      // Check if user is already added to this device
+
+      var owner = Owners.findOne(
+        { deviceId: oldDevice._id, userId: this.userId },
+        { fields: { userId: 1 }}
       );
-    }
 
-    var userId = '';
-    // var userId = this.userId;
+      if (!owner) {
 
-    // Check if device already present in DB
-    var d = Devices.findOne(device._id);
+        Owners.insert(
 
-    if (!d) { // If device is not in DB, insert it with current user id.
-      device.users = [{
-        _id: this.userId
-        // TODO: add user number
-      }];
-      device.zones = [  // FIXME: Only for demo. Remove it later.
-        { _id: 1, isArmed: false }, { _id: 2, isArmed: false },
-        { _id: 3, isArmed: false }, { _id: 4, isArmed: false },
-        { _id: 5, isArmed: false }, { _id: 6, isArmed: false },
-        { _id: 7, isArmed: false }, { _id: 8, isArmed: false },
-        { _id: 9, isArmed: false }, { _id: 10, isArmed: false },
-        { _id: 11, isArmed: false }, { _id: 12, isArmed: false },
-        { _id: 13, isArmed: false }, { _id: 14, isArmed: false },
-        { _id: 15, isArmed: false }, { _id: 16, isArmed: false }
-      ];
+          { deviceId: oldDevice._id, num: 1, userId: this.userId }, // FIXME: num
+
+          function(error, result) {
+
+            Meteor.call(
+              'writeHistory',
+              {
+                event: 'History.owner_added',
+                deviceId: oldDevice._id
+              }
+            );
+          }
+        );
+      }
+
+      return oldDevice._id;
+
+    } else { // device is not in DB
+
+      var userId = this.userId; // required because of the callback function
+
       return Devices.insert(
-        device,
+
+        newDevice,
+
         function(error, result) {
+
           if (error) {
-            //code
+
+            console.log(error);
+
           } else {
+
             Meteor.call(
               'writeHistory',
               {
                 event: 'History.device_added',
-                deviceId: device._id
+                deviceId: newDevice._id
               }
             );
+
+            Owners.insert(
+              { deviceId: newDevice._id, num: 1, userId: userId } // FIXME: num
+            );
+
+            //FIXME: Only for demo. Remove it later. =================
+            var i;
+            for (i = 0; i < 16; i++) {
+              Zones.insert({ deviceId: newDevice._id, num: i + 1 });
+            }
+            //========================================================
           }
         }
       );
     }
-
-    // If device is already in DB, check if user already
-    // added to this device
-    for (i = 0; d.users && i < d.users.length; i++) {
-      if (d.users[i]._id === this.userId) {
-        return d._id;
-      }
-    }
-
-    // If user is not added to present device, add him.
-    Devices.update(
-      d._id,
-      {
-        $push: {
-          users: {
-            _id: this.userId
-            // TODO: add user number
-          }
-        }
-      },
-      function(error, result) {
-        if (error) {
-          //code
-        } else {
-          // Meteor.call('writeHistory', userId, device._id, 'User added');
-          Meteor.call(
-            'writeHistory',
-            {
-              event: 'History.user_added',
-              deviceId: device._id
-            }
-          );
-        }
-      }
-    );
-
-    return d._id;
   },
 
 
@@ -117,19 +103,13 @@ Meteor.methods({
       );
     }
 
-    // check(
-    //   device,
-    //   {
-    //     _id: String,
-    //     name: Match.Maybe(String)
-    //   }
-    // );
-
     // Check if user is owning this device
-    var d = Devices.findOne({ _id: device._id, "users._id": this.userId });
+    var owner = Owners.findOne(
+      { deviceId: device._id, userId: this.userId },
+      { fields: { _id: 1 }}
+    );
 
-    if (!d) { // Don't update if user is not owning this device
-      // return;
+    if (!owner) {
       throw new Meteor.Error(
         'not-device-owner',
         'Must own this device before updating it.'
@@ -138,14 +118,16 @@ Meteor.methods({
 
     Devices.update(
 
-      { _id: device._id },  // FIXME
+      { _id: device._id },
 
       { $set: { name: device.name } },
 
       function(error, result) {
 
         if (error) {
-          //code
+
+          console.log(error);
+
         } else {
 
           Meteor.call(
@@ -171,15 +153,13 @@ Meteor.methods({
       );
     }
 
-    // check(deviceId, String);
-
-    var userId = this.userId;
-
     // Check if user is owning this device
-    var d = Devices.findOne({ _id: deviceId, "users._id": userId });
+    var owner = Owners.findOne(
+      { deviceId: deviceId, userId: this.userId },
+      { fields: { _id: 1 }}
+    );
 
-    if (!d) { // Don't remove if user is not owning this device
-      // return;
+    if (!owner) {
       throw new Meteor.Error(
         'not-device-owner',
         'Must own this device before removing it.'
@@ -187,42 +167,27 @@ Meteor.methods({
     }
 
     // Check if there're other users owning this device
-    var dd = Devices.findOne(deviceId);
-    var isMultiusers = false;
-    var i;
+    var otherOwners = Owners.find(
+      { deviceId: deviceId, userId: { $ne: this.userId } }
+    ).fetch();
 
-    for (i = 0; dd && dd.users && i < dd.users.length; i++) {
-      if (dd.users[i]._id === userId) {
-        continue;
-      }
-      isMultiusers = true;
-      break;
-    }
+    if (otherOwners) { // Remove user from owners list
 
-    if (isMultiusers) { // Remove user from device
+      Owners.remove(
 
-      Devices.update(
-
-        deviceId,
-
-        {
-          $pull: {
-            users: {
-              _id: userId
-              // TODO: check user number
-            }
-          }
-        },
+        { deviceId: deviceId, userId: this.userId },
 
         function(error, result) {
           if (error) {
-            //code
+
+            console.log(error);
+
           } else {
 
             Meteor.call(
               'writeHistory',
               {
-                event: 'History.user_removed',
+                event: 'History.owner_removed',
                 deviceId: deviceId
               }
             );
@@ -239,7 +204,9 @@ Meteor.methods({
         function(error) {
 
           if (error) {
-            //code
+
+            console.log(error);
+
           } else {
 
             Meteor.call(
@@ -265,6 +232,19 @@ Meteor.methods({
       );
     }
 
+    // Check if user is owning this device
+    var owner = Owners.findOne(
+      { deviceId: deviceId, userId: this.userId },
+      { fields: { _id: 1 }}
+    );
+
+    if (!owner) {
+      throw new Meteor.Error(
+        'not-device-owner',
+        'Must own this device before using it.'
+      );
+    }
+
     Meteor.call(
       'writeHistory',
       {
@@ -285,203 +265,64 @@ Meteor.methods({
       );
     }
 
-    Devices.find(deviceId).forEach(function(device) {
-
-      if (device.zones) {
-
-        var zonesIds = [];
-
-        device.zones.forEach(function(zone) {
-          if (zone.type !== 'siren' && zone.isArmed !== isArmed) {
-            zonesIds.push(zone._id);
-          }
-        });
-
-        Meteor.call(
-          'writeHistory',
-          {
-            event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
-            deviceId: device._id,
-            zonesIds: zonesIds
-          }
-        );
-
-        device.zones.forEach(function(zone) {
-
-          Devices.update(
-            {
-              _id: deviceId,
-              zones:
-                {
-                  $elemMatch:
-                    {
-                      _id: zone._id,
-                      isArmed: !isArmed,
-                      type:
-                        {
-                          $ne: 'siren'
-                        }
-                    }
-                }
-            },
-            {
-              $set:
-                {
-                  'zones.$.isArmed': isArmed
-                }
-            }
-          );
-        });
-      }
-    });
-  },
-
-
-  setZoneArmed: function(deviceId, zoneId, isArmed) {
-
-    if (!this.userId) {
-      throw new Meteor.Error(
-        'not-logged-in',
-        'Must be logged in before using a device.'
-      );
-    }
-
     // Check if user is owning this device
-    var d = Devices.findOne({ _id: deviceId, "users._id": this.userId});
-    if (!d) { // Don't act if user is not owning this device
-      // return;
+    var owner = Owners.findOne(
+      { deviceId: deviceId, userId: this.userId },
+      { fields: { _id: 1 }}
+    );
+
+    if (!owner) {
       throw new Meteor.Error(
         'not-device-owner',
         'Must own this device before using it.'
       );
     }
 
-    Devices.update(
+    var zones = Zones.find(
+      {
+        deviceId: deviceId,
+        type: { $ne: 'siren' },
+        isArmed: { $ne: isArmed }
+      },
+      { fields: { _id: 1, num: 1 }}
+    );
+
+    var zonesIds = [];
+    var zonesNums = [];
+
+    zones.forEach(function(zone) {
+      zonesIds.push(zone._id);
+      zonesNums.push(zone.num)
+    });
+
+    Zones.update(
 
       {
-        _id: deviceId,
-        zones: { $elemMatch: { _id: zoneId, type: { $ne: 'siren' } } }
+        _id: { $in: zonesIds },
+        deviceId: deviceId
       },
 
-      {
-        $set: { "zones.$.isArmed": isArmed }
-      },
+      { $set: { isArmed: isArmed }},
 
-      function(error, result) {
+      { multi: true },
 
-        if (result > 0) {
+      function(error) {
 
-          var zonesIds = [];
+        if (error) {
 
-          zonesIds.push(zoneId);
+          console.log(error);
+
+        } else {
 
           Meteor.call(
             'writeHistory',
             {
               event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
               deviceId: deviceId,
-              zonesIds: zonesIds
+              zonesNums: zonesNums
             }
           );
         }
-      }
-    );
-  },
-
-
-  updateZone: function(deviceId, zone) {
-
-    if (!this.userId) {
-      throw new Meteor.Error(
-        'not-logged-in',
-        'Must be logged in before updating a zone.'
-      );
-    }
-
-    // check(deviceId, String);
-    // check(
-    //   zone,
-    //   {
-    //     _id: Match.Integer,
-    //     name: Match.Maybe(String)
-    //   }
-    // );
-
-    // Check if user is owning this device
-    var d = Devices.findOne({ _id: deviceId, "users._id": this.userId });
-
-    if (!d) { // Don't update if user is not owning this device
-      // return;
-      throw new Meteor.Error(
-        'not-device-owner',
-        'Must own this device before updating a zone.'
-      );
-    }
-
-    Devices.update(
-
-      { _id: deviceId, "zones._id": zone._id },
-
-      { $set: { "zones.$.name": zone.name } },
-
-      function(error, result) {
-        if (error) {
-          //code
-        } else {
-          Meteor.call(
-            'writeHistory',
-            {
-              event: 'History.zone_name_set',
-              deviceId: deviceId,
-              zoneId: zone._id,
-              zoneNewName: zone.name
-            }
-          );
-        }
-      }
-    );
-  },
-
-
-  removeZone: function(deviceId, zoneId) {
-
-    if (!this.userId) {
-      throw new Meteor.Error(
-        'not-logged-in',
-        'Must be logged in before removing a zone.'
-      );
-    }
-
-    // check(deviceId, String);
-    // check(zoneId, Match.Integer);
-
-    // Check if user is owning this device
-    var d = Devices.findOne({ _id: deviceId, "users._id": this.userId });
-
-    if (!d) { // Don't remove if user is not owning this device
-      // return;
-      throw new Meteor.Error(
-        'not-device-owner',
-        'Must own this device before removing a zone.'
-      );
-    }
-
-    Devices.update(deviceId,
-
-      {
-        $pull: { zones: { _id: zoneId } }
-      },
-
-      function(error, result) {
-
-        Meteor.call(
-          'writeHistory',
-          {
-            event: 'History.zone_removed',
-            deviceId: deviceId,
-            zoneId: zoneId
-          }
-        );
       }
     );
   }

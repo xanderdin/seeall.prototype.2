@@ -1,19 +1,43 @@
-import { Meteor } from 'meteor/meteor';
 import { Devices } from '/imports/api/devices/devices.js';
+import { Owners } from '/imports/api/owners/owners.js';
 
 
-Meteor.publish('devices', function(deviceId) {
+Meteor.publishComposite('devices', function(deviceId) {
 
-  if (!this.userId) {
-    return this.ready();
-  }
+  var devicesFields = {
+    _id: 1,
+    name: 1,
+    isOnline: 1,
+    isTamperOpen: 1,
+    isBatteryLow: 1,
+    isPowerLost: 1,
+    isFailure: 1,
+    isOff: 1
+  };
 
-  // TODO: check for parameters
-
-  if (deviceId) {
-    return Devices.find({ _id: deviceId, "users._id": this.userId }, { limit: 1 });
-  } else {
-    return Devices.find({ "users._id": this.userId });
-  }
+  return {
+    find: function() {
+      var qry = {
+        userId: this.userId
+      };
+      if (deviceId) {
+        qry.deviceId = deviceId;
+      }
+      return Owners.find(
+        qry,
+        { fields: { deviceId: 1 } }
+      );
+    },
+    children: [
+      {
+        find: function(owner) {
+          return Devices.find(
+            { _id: owner.deviceId },
+            { fields: devicesFields }
+          );
+        }
+      }
+    ]
+  };
 
 });

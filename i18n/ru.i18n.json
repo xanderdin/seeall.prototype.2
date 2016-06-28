@@ -55,7 +55,7 @@
     "no_history": "Нет истории"
   },
 
-  "Users_grid": {
+  "Owners_grid": {
     "no_users": "Нет людей"
   },
 
@@ -87,8 +87,8 @@
     "device_removed": "Прибор удален; П:__user_name__",
     "zone_name_set": "Зона __zone_num__ названа '__zone_new_name__'; П: __user_name__",
     "zone_removed": "Зона __zone_num__ удалена; П:__user_name__",
-    "user_added": "Добавлен пользователь: __user_name__",
-    "user_removed": "Удален пользователь: __user_name__",
+    "owner_added": "Добавлен пользователь: __user_name__",
+    "owner_removed": "Удален пользователь: __user_name__",
     "cmd_get_state": "Опрос; П:__user_name__",
     "cmd_arm": "Взять __zones_ranges__; П:__user_name__",
     "cmd_disarm": "Снять __zones_ranges__; П:__user_name__"

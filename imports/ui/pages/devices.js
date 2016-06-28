@@ -15,7 +15,8 @@ import './devices.html';
 Template.Devices_page.onCreated(function() {
   this.subscribe('devices');
   this.subscribe('history');
-  // this.subscribe('usersList');
+  this.subscribe('owners');
+  this.subscribe('zones');
 });
 
 

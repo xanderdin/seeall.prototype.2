@@ -16,7 +16,7 @@
 
     <div class="col s12" id="tabZones">
 
-      {{> Zones_grid deviceId=device._id zones=device.zones}}
+      {{> Zones_grid zones=zones }}
 
       <!-- {{> BtnFloating_DeviceActions device=device }} -->
 
@@ -30,7 +30,7 @@
 
     <div class="col s12" id="tabUsers">
 
-      {{> Users_grid deviceId=device._id usersList=usersList }}
+      {{> Owners_grid owners=owners }}
 
     </div>
 

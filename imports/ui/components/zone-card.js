@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import '/imports/api/devices/zones.js';
+// import '/imports/api/devices/zones.js';
 
 import './modal-zone-edit.js';
 import './modal-zone-remove.js';
@@ -46,32 +46,16 @@ Template.Zone_card.onRendered(() => {
 });
 
 
-Template.Zone_card.helpers({
-  formatZoneNum() {
-    return formatZoneNum(this.zone._id);
-  },
-  getZoneMainIconTag() {
-    return getZoneMainIconTag(this.zone);
-  },
-  getZoneColorClass() {
-    return getZoneColorClass(this.zone);
-  },
-  isZoneSiren() {
-    return isZoneSiren(this.zone);
-  }
-});
-
-
 Template.Zone_card.events({
   'click .js-zone-arm'(event) {
     event.preventDefault();
     Meteor.reconnect();
-    Meteor.call('setZoneArmed', this.deviceId, this.zone._id, true);
+    Meteor.call('setZoneArmed', this.zone._id, true);
   },
   'click .js-zone-disarm'(event) {
     event.preventDefault();
     Meteor.reconnect();
-    Meteor.call('setZoneArmed', this.deviceId, this.zone._id, false);
+    Meteor.call('setZoneArmed', this.zone._id, false);
   }
   // 'click .js-zone-edit'(event) {
   //   event.preventDefault();

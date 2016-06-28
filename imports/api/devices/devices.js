@@ -1,26 +1,123 @@
 import { Mongo } from 'meteor/mongo';
-
-import './zones.js';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { History } from '/imports/api/history/history.js';
+import { Owners } from '/imports/api/owners/owners.js';
+import { Zones } from '/imports/api/zones/zones.js';
 
-export const Devices = new Mongo.Collection('devices');
+import '/imports/api/zones/functions.js';
+
+
+class DevicesCollection extends Mongo.Collection {
+  remove(selector, callback) {
+    Zones.remove({ deviceId: selector });
+    Owners.remove({ deviceId: selector });
+    return super.remove(selector, callback);
+  }
+}
+
+
+// export const Devices = new Mongo.Collection('devices');
+export const Devices = new DevicesCollection('devices');
+
+
+Devices.attachSchema(new SimpleSchema({
+  _id: {
+    type: String,
+    regEx: /^[0-9a-f]{12}$/
+  },
+  name: {
+    type: String,
+    defaultValue: '',
+    max: 128
+  },
+  isOnline: {
+    type: Boolean,
+    defaultValue: false
+  },
+  isTamperOpen: {
+    type: Boolean,
+    defaultValue: false
+  },
+  isBatteryLow: {
+    type: Boolean,
+    defaultValue: false
+  },
+  isPowerLost: {
+    type: Boolean,
+    defaultValue: false
+  },
+  isFailure: {
+    type: Boolean,
+    defaultValue: false
+  },
+  isOff: {
+    type: Boolean,
+    defaultValue: false
+  },
+  // simBalance: {
+  //
+  // },
+}));
 
 
 Devices.helpers({
+
+  history() {
+    return History.find(
+      { deviceId: this._id },
+      { sort: [['createdAt', 'desc']], limit: 300 }
+    );
+  },
+
+
+  lastHistoryText() {
+
+    var res = History.find(
+      { deviceId: this._id },
+      { sort: [['createdAt', 'desc']], limit: 1 }
+    );
+    try {
+      return res.fetch()[0].text();
+    } catch(error) {
+    }
+
+    return '';
+  },
+
+
+  owners() {
+    return Owners.find(
+      { deviceId: this._id },
+      { sort: [['num', 'asc']] }
+    );
+  },
+
+
+  zones() {
+    return Zones.find(
+      { deviceId: this._id },
+      { sort: [['num', 'asc']] }
+    );
+  },
+
 
   nameOrId() {
     return this.name ? this.name : this._id;
   },
 
+
   isArmed() {
-    if (this.zones) {
+
+    var zones = this.zones().fetch();
+
+    if (zones) {
       var i;
-      for (i = 0; i < this.zones.length; i++) {
-        if (this.zones[i].type === 'siren') {
+      for (i = 0; i < zones.length; i++) {
+        if (zones[i].isSiren()) {
           continue;
         }
-        if (this.zones[i].isArmed === true) {
+        if (zones[i].isArmed === true) {
           return true;
         }
       }
@@ -29,12 +126,15 @@ Devices.helpers({
     return false;
   },
 
+
   isInAlarm() {
 
-    if (this.zones) {
+    var zones = this.zones().fetch();
+
+    if (zones) {
       var i;
-      for (i = 0; i < this.zones.length; i++) {
-        if (isZoneInAlarm(this.zones[i])) {
+      for (i = 0; i < zones.length; i++) {
+        if (zones[i].isInAlarm()) {
           return true;
         }
       }
@@ -46,6 +146,7 @@ Devices.helpers({
 
     return false;
   },
+
 
   hasAttentionInfo() {
 
@@ -68,23 +169,35 @@ Devices.helpers({
     return false;
   },
 
+
   mainIconTag() {
 
     if (this.isOff === true) {
-      return '<i class="material-icons medium" style="color: ' + this.getDeviceColorStyle() + '">power_settings_new</i>';
+      return '<i class="material-icons medium" style="color: '
+        + this.colorStyle()
+        + '">power_settings_new</i>';
     } else if (this.isFailure === true) {
-      return '<i class="material-icons medium" style="color: ' + this.getDeviceColorStyle() + '">sentiment_very_dissatisfied</i>';
+      return '<i class="material-icons medium" style="color: '
+        + this.colorStyle()
+        + '">sentiment_very_dissatisfied</i>';
     } else if (this.isArmed() && this.isInAlarm()) {
-      // return '<i class="flaticon-broken37 medium" style="color: #ff1744"></i>';
-      return '<i class="material-icons medium" style="color: ' + this.getDeviceColorStyle() + '">notifications_active</i>';
+      return '<i class="material-icons medium" style="color: '
+        + this.colorStyle()
+        + '">notifications_active</i>';
     } else if (this.isArmed()) {
-      return '<i class="material-icons medium" style="color: ' + this.getDeviceColorStyle() + '">lock</i>';
+      return '<i class="material-icons medium" style="color: '
+        + this.colorStyle()
+        + '">lock</i>';
     } else {
-      return '<i class="material-icons medium" style="color: ' + this.getDeviceColorStyle() + '">lock_open</i>';
+      return '<i class="material-icons medium" style="color: '
+        + this.colorStyle()
+        + '">lock_open</i>';
     }
   },
 
-  getDeviceColorClass() {
+
+  colorClass() {
+
     if (this.isOff) {
       return MyStateColors.off.classColor;
     }
@@ -101,7 +214,9 @@ Devices.helpers({
     return MyStateColors.unspecified.classColor;
   },
 
-  getDeviceColorStyle() {
+
+  colorStyle() {
+
     if (this.isOff) {
       return MyStateColors.off.styleColor;
     }
@@ -118,26 +233,21 @@ Devices.helpers({
     return MyStateColors.unspecified.styleColor;
   },
 
-  // lastHistoryMessage() {
-  //   var msg = 'No Info';
-  //   var res = History.find({ deviceId: this._id }, { sort: [['createdAt', 'desc']], limit: 1 });
-  //   if (res) {
-  //     try {
-  //       msg = res.fetch()[0].info;
-  //     } catch(error) {
-  //     }
-  //   }
-  //   return msg;
-  // }
 
-  lastHistoryText() {
-    var res = History.find({ deviceId: this._id }, { sort: [['createdAt', 'desc']], limit: 1 });
-    if (res) {
-      try {
-        return res.fetch()[0].text();
-      } catch(error) {
+  zonesHaveAttentionInfo() {
+
+    var zones = this.zones().fetch();
+
+    if (zones) {
+      var i;
+      for (i = 0; i < zones.length; i++) {
+        if (zones[i].hasAttentionInfo()) {
+          return true;
+        }
       }
     }
-    return '';
+
+    return false;
   }
+
 });

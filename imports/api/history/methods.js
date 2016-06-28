@@ -4,24 +4,12 @@ import { History } from '/imports/api/history/history.js';
 
 Meteor.methods({
 
-  // writeHistory: function(userId, devId, info) {
-  //
-  //   // if (!this.userId) {
-  //   //   throw new Meteor.Error('not-logged-in', 'Must be logged in before writting to history.');
-  //   // }
-  //
-  //   return History.insert({
-  //     createdAt: new Date(),
-  //     deviceId: devId,
-  //     userId: userId,
-  //     info: info
-  //   });
-  // },
-
   writeHistory: function(data) {
 
     if (Meteor.isClient && !this.userId) {
-      throw new Meteor.Error('not-logged-in', 'Must be logged in before writting to history.');
+      throw new Meteor.Error(
+        'not-logged-in',
+        'Must be logged in before writting to history.');
     }
 
     var record = {
@@ -30,9 +18,9 @@ Meteor.methods({
 
     if (this.userId) {
       record.userId = this.userId;
-      var u = Meteor.user();
-      if (u && u.username) {
-        record.username = u.username;
+      var user = Meteor.user();
+      if (user && user.username) {
+        record.username = user.username;
       }
     }
 

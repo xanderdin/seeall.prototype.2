@@ -1,0 +1,21 @@
+<template name="Owners_grid">
+
+  <div class="row">
+
+  {{#if owners }}
+  
+    {{#each owner in owners }}
+      {{> Owner_card owner=owner }}
+    {{/each}}
+
+  {{else}}
+
+      <p class="col s12 center">
+        {{_ "Owners_grid.no_users" }}
+      </p>
+
+  {{/if}}
+
+  </div>
+
+</template>

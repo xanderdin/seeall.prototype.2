@@ -55,7 +55,7 @@
     "no_history": "No history"
   },
 
-  "Users_grid": {
+  "Owners_grid": {
     "no_users": "No users"
   },
 
@@ -87,8 +87,8 @@
     "device_removed": "Device removed; U:__user_name__",
     "zone_name_set": "Zone __zone_num__ named '__zone_new_name__'; U:__user_name__",
     "zone_removed": "Zone __zone_num__ removed; U:__user_name__",
-    "user_added": "User added: __user_name__",
-    "user_removed": "User removed: __user_name__",
+    "owner_added": "User added: __user_name__",
+    "owner_removed": "User removed: __user_name__",
     "cmd_get_state": "Get State; U:__user_name__",
     "cmd_arm": "Arm __zones_ranges__; U:__user_name__",
     "cmd_disarm": "Disarm __zones_ranges__; U:__user_name__"

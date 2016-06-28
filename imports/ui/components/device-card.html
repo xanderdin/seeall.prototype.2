@@ -1,35 +1,33 @@
 <template name="Device_card">
+
   <div class="col s12 m6 l3">
+
     <div class="card">
-      <!-- {{#unless deviceDetails }} -->
-      <!-- <span class="card-title blue-grey white-text" style="padding: 4px;"> -->
+
       <span class="card-title">
-        <a href="" class="device-context-menu-btn waves-effect waves-light btn {{ device.getDeviceColorClass }}" data-activates="device-context-menu-{{ device._id }}">
+        <a href="" class="device-context-menu-btn waves-effect waves-light btn {{ device.colorClass }}" data-activates="device-context-menu-{{ device._id }}">
           {{ device.nameOrId }}
-          <!-- <i class="material-icons right" style="padding-top: 5px;">more_vert</i> -->
         </a>
       </span>
-      <!-- {{/unless}} -->
+
       <div class="device-card-content card-content js-card-device">
-        <!-- <span class="card-title truncate" style="color: #607d8b">{{#if showGid }}{{ device._id }}{{else}}{{ device.nameOrId }}{{/if}}</span> -->
-        <!-- <span class="center truncate card-title">
-          {{#if showGid }}{{ device._id }}{{else}}{{ device.nameOrId }}{{/if}}
-        </span> -->
+
         <div class="row">
           <div class="col s12 center">
               {{{ device.mainIconTag }}}
           </div>
         </div>
+
         <div class="row">
           <div class="col s12 truncate center">
             {{#if device.lastHistoryText }}
-              <!-- {{_ device.lastHistoryText.event device.lastHistoryText.param }} -->
               {{ device.lastHistoryText }}
             {{else}}
               {{_ "no_info" }}
             {{/if}}
           </div>
         </div>
+
         {{#if deviceDetails }}
         <div class="row">
           <div class="col s12 truncate center">
@@ -37,8 +35,11 @@
           </div>
         </div>
         {{/if}}
+
       </div>
+
       {{> DeviceStatusLine device=device }}
+
       <div class="card-action center row">
         <div class="col s4">
           <a href="" class="btn waves-effect waves-light grey js-device-arm"><i class="material-icons">lock</i></a>
@@ -50,7 +51,9 @@
           <a href="" class="btn waves-effect waves-light grey js-device-disarm"><i class="material-icons">lock_open</i></a>
         </div>
       </div>
+
     </div>
+
   </div>
 
   <ul id="device-context-menu-{{ device._id }}" class="dropdown-content">
