@@ -62,7 +62,8 @@
   "AddNewDevice_modal": {
     "title": "New Device",
     "name": "Name",
-    "add": "Add"
+    "add": "Add",
+    "user_num": "User Number"
   },
 
   "DeviceEdit_modal": {

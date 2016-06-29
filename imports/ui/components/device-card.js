@@ -10,7 +10,7 @@ import './device-card.html';
 
 Template.Device_card.onRendered(() => {
 
-  var instance = Template.instance();
+  const instance = Template.instance();
 
   // Device context menu
   instance.$('.device-context-menu-btn').dropdown({

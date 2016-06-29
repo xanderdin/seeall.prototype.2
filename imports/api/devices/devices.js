@@ -73,7 +73,7 @@ Devices.helpers({
 
   lastHistoryText() {
 
-    var res = History.find(
+    const res = History.find(
       { deviceId: this._id },
       { sort: [['createdAt', 'desc']], limit: 1 }
     );
@@ -109,7 +109,7 @@ Devices.helpers({
 
   isArmed() {
 
-    var zones = this.zones().fetch();
+    const zones = this.zones().fetch();
 
     if (zones) {
       var i;
@@ -129,7 +129,7 @@ Devices.helpers({
 
   isInAlarm() {
 
-    var zones = this.zones().fetch();
+    const zones = this.zones().fetch();
 
     if (zones) {
       var i;
@@ -236,7 +236,7 @@ Devices.helpers({
 
   zonesHaveAttentionInfo() {
 
-    var zones = this.zones().fetch();
+    const zones = this.zones().fetch();
 
     if (zones) {
       var i;

@@ -62,7 +62,8 @@
   "AddNewDevice_modal": {
     "title": "Новый прибор",
     "name": "Название",
-    "add": "Добавить"
+    "add": "Добавить",
+    "user_num": "Номер пользователя"
   },
 
   "DeviceEdit_modal": {

@@ -4,7 +4,7 @@ import { Owners } from '/imports/api/owners/owners.js';
 
 Meteor.publishComposite('history', function(deviceId) {
 
-  var historyFields = {
+  const historyFields = {
     createdAt: 1,
     event: 1,
     userId: 1,

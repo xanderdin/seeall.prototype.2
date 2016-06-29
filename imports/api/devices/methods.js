@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Devices } from '/imports/api/devices/devices.js';
 import { History } from '/imports/api/history/history.js';
@@ -6,9 +8,28 @@ import { Owners } from '/imports/api/owners/owners.js';
 import { Zones } from '/imports/api/zones/zones.js';
 
 
-Meteor.methods({
+export const addNewDevice = new ValidatedMethod({
 
-  addNewDevice: function(newDevice) {
+  name: 'devices.addNew',
+
+  validate: new SimpleSchema({
+    ownerNum: {
+      type: Number,
+      min: 1,
+      max: 32
+    },
+    deviceId: {
+      type: String,
+      regEx: /^[0-9a-f]{12}$/
+    },
+    deviceName: {
+      type: String,
+      max: 128,
+      optional: true
+    }
+  }).validator(),
+
+  run({ ownerNum, deviceId, deviceName }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -18,8 +39,8 @@ Meteor.methods({
     }
 
     // Check if device is already present in DB
-    var oldDevice = Devices.findOne(
-      { _id: newDevice._id },
+    const oldDevice = Devices.findOne(
+      { _id: deviceId },
       { fields: { _id: 1 }}
     );
 
@@ -27,7 +48,7 @@ Meteor.methods({
 
       // Check if user is already added to this device
 
-      var owner = Owners.findOne(
+      const owner = Owners.findOne(
         { deviceId: oldDevice._id, userId: this.userId },
         { fields: { userId: 1 }}
       );
@@ -36,7 +57,11 @@ Meteor.methods({
 
         Owners.insert(
 
-          { deviceId: oldDevice._id, num: 1, userId: this.userId }, // FIXME: num
+          {
+            deviceId: oldDevice._id,
+            num: ownerNum,
+            userId: this.userId
+          },
 
           function(error, result) {
 
@@ -55,11 +80,14 @@ Meteor.methods({
 
     } else { // device is not in DB
 
-      var userId = this.userId; // required because of the callback function
+      const userId = this.userId; // required because of the callback function
 
       return Devices.insert(
 
-        newDevice,
+        {
+          _id: deviceId,
+          name: deviceName
+        },
 
         function(error, result) {
 
@@ -73,28 +101,48 @@ Meteor.methods({
               'writeHistory',
               {
                 event: 'History.device_added',
-                deviceId: newDevice._id
+                deviceId: deviceId
               }
             );
 
             Owners.insert(
-              { deviceId: newDevice._id, num: 1, userId: userId } // FIXME: num
+              {
+                deviceId: deviceId,
+                num: ownerNum,
+                userId: userId
+              }
             );
 
             //FIXME: Only for demo. Remove it later. =================
             var i;
             for (i = 0; i < 16; i++) {
-              Zones.insert({ deviceId: newDevice._id, num: i + 1 });
+              Zones.insert({ deviceId: deviceId, num: i + 1 });
             }
             //========================================================
           }
         }
       );
     }
-  },
+  }
+});
 
 
-  updateDevice: function(device) {
+export const updateDevice = new ValidatedMethod({
+
+  name: 'devices.update',
+
+  validate: new SimpleSchema({
+    deviceId: {
+      type: String,
+      regEx: /^[0-9a-f]{12}$/
+    },
+    deviceName: {
+      type: String,
+      max: 128
+    }
+  }).validator(),
+
+  run({ deviceId, deviceName }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -104,8 +152,8 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
-      { deviceId: device._id, userId: this.userId },
+    const owner = Owners.findOne(
+      { deviceId: deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
 
@@ -118,9 +166,9 @@ Meteor.methods({
 
     Devices.update(
 
-      { _id: device._id },
+      { _id: deviceId },
 
-      { $set: { name: device.name } },
+      { $set: { name: deviceName } },
 
       function(error, result) {
 
@@ -134,17 +182,29 @@ Meteor.methods({
             'writeHistory',
             {
               event: 'History.device_name_set',
-              deviceId: device._id,
-              deviceNewName: device.name
+              deviceId: deviceId,
+              deviceNewName: deviceName
             }
           );
         }
       }
     );
-  },
+  }
+});
 
 
-  removeDevice: function(deviceId) {
+export const removeDevice = new ValidatedMethod({
+
+  name: 'devices.remove',
+
+  validate: new SimpleSchema({
+    deviceId: {
+      type: String,
+      regEx: /^[0-9a-f]{12}$/
+    }
+  }).validator(),
+
+  run({ deviceId }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -154,7 +214,7 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
+    const owner = Owners.findOne(
       { deviceId: deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
@@ -167,7 +227,7 @@ Meteor.methods({
     }
 
     // Check if there're other users owning this device
-    var otherOwners = Owners.find(
+    const otherOwners = Owners.find(
       { deviceId: deviceId, userId: { $ne: this.userId } }
     ).fetch();
 
@@ -220,10 +280,22 @@ Meteor.methods({
         }
       );
     }
-  },
+  }
+});
 
 
-  getDeviceState: function(deviceId) {
+export const getDeviceState = new ValidatedMethod({
+
+  name: 'devices.getState',
+
+  validate: new SimpleSchema({
+    deviceId: {
+      type: String,
+      regEx: /^[0-9a-f]{12}$/
+    }
+  }).validator(),
+
+  run({ deviceId }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -233,7 +305,7 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
+    const owner = Owners.findOne(
       { deviceId: deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
@@ -252,11 +324,25 @@ Meteor.methods({
         deviceId: deviceId
       }
     );
+  }
+});
 
-  },
 
+export const setDeviceArmed = new ValidatedMethod({
 
-  setDeviceArmed: function(deviceId, isArmed) {
+  name: 'devices.setArmed',
+
+  validate: new SimpleSchema({
+    deviceId: {
+      type: String,
+      regEx: /^[0-9a-f]{12}$/
+    },
+    isArmed: {
+      type: Boolean
+    }
+  }).validator(),
+
+  run({ deviceId, isArmed }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -266,7 +352,7 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
+    const owner = Owners.findOne(
       { deviceId: deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
@@ -278,7 +364,7 @@ Meteor.methods({
       );
     }
 
-    var zones = Zones.find(
+    const zones = Zones.find(
       {
         deviceId: deviceId,
         type: { $ne: 'siren' },
@@ -326,5 +412,4 @@ Meteor.methods({
       }
     );
   }
-
 });

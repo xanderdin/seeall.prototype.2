@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
+import { setZoneArmed } from '/imports/api/zones/methods.js';
+
 // import '/imports/api/devices/zones.js';
 
 import './modal-zone-edit.js';
@@ -14,7 +16,7 @@ import './zone-card.html';
 
 Template.Zone_card.onRendered(() => {
 
-  var instance = Template.instance();
+  const instance = Template.instance();
 
   // Zone menu
   instance.$('.zone-context-menu-btn').dropdown(
@@ -50,12 +52,28 @@ Template.Zone_card.events({
   'click .js-zone-arm'(event) {
     event.preventDefault();
     Meteor.reconnect();
-    Meteor.call('setZoneArmed', this.zone._id, true);
+    // Meteor.call('setZoneArmed', this.zone._id, true);
+    setZoneArmed.call(
+      { zoneId: this.zone._id, isArmed: true },
+      (err, res) => {
+        if (err) {
+          alert(err);
+        }
+      }
+    );
   },
   'click .js-zone-disarm'(event) {
     event.preventDefault();
     Meteor.reconnect();
-    Meteor.call('setZoneArmed', this.zone._id, false);
+    // Meteor.call('setZoneArmed', this.zone._id, false);
+    setZoneArmed.call(
+      { zoneId: this.zone._id, isArmed: false },
+      (err, res) => {
+        if (err) {
+          alert(err);
+        }
+      }
+    );
   }
   // 'click .js-zone-edit'(event) {
   //   event.preventDefault();

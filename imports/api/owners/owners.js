@@ -28,7 +28,7 @@ Owners.helpers({
   },
 
   name() {
-    var user =  Meteor.users.findOne(
+    const user =  Meteor.users.findOne(
       { _id: this.userId },
       { fields: { username: 1 }}
     );

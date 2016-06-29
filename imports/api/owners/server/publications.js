@@ -1,21 +1,45 @@
 import { Owners } from '/imports/api/owners/owners.js';
 
 
-Meteor.publish('owners', function(deviceId){
+Meteor.publishComposite('owners', function(deviceId) {
 
-  if (!this.userId) {
-    return this.ready();
-  }
-
-  var ownersFields = {
+  const ownersFields = {
     _id: 1,
     deviceId: 1,
     num: 1,
     userId: 1
   };
 
-  return Owners.find(
-    { deviceId: deviceId },
-    { fields: ownersFields }
-  );
+  return {
+
+    // Find devices (or specified device) owned by current user
+    find: function() {
+
+      var qry = {
+        userId: this.userId
+      };
+
+      if (deviceId) {
+        qry.deviceId = deviceId;
+      }
+
+      return Owners.find(
+        qry,
+        { fields: { deviceId: 1 }}
+      );
+    },
+
+    children: [
+      {
+        // Find all onwers of found devices.
+        find: function(owner) {
+          return Owners.find(
+            { deviceId: owner.deviceId },
+            { fields: ownersFields }
+          );
+        }
+      }
+    ]
+  };
+
 });

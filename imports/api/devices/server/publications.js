@@ -4,7 +4,7 @@ import { Owners } from '/imports/api/owners/owners.js';
 
 Meteor.publishComposite('devices', function(deviceId) {
 
-  var devicesFields = {
+  const devicesFields = {
     _id: 1,
     name: 1,
     isOnline: 1,

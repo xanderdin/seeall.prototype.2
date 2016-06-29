@@ -4,7 +4,7 @@ import { Zones } from '/imports/api/zones/zones.js';
 
 Meteor.publishComposite('zones', function(deviceId) {
 
-  var zonesFields = {
+  const zonesFields = {
     _id: 1,
     deviceId: 1,
     num: 1,

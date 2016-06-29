@@ -6,8 +6,8 @@
       <form class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <input type="text" name="deviceNewName_{{ device._id }}" id="deviceNewName_{{ device._id }}" placeholder="{{_ 'DeviceEdit_modal.name' }}" class="validate" value="{{ device.name }}">
-            <!-- <label for="deviceNewName_{{ device._id }}">{{_ 'DeviceEdit_modal.name' }}</label> -->
+            <input type="text" name="deviceNewName_{{ device._id }}" id="deviceNewName_{{ device._id }}" class="validate js-char-count" value="{{ device.name }}" length="128" maxlength="128" required>
+            <label for="deviceNewName_{{ device._id }}">{{_ 'DeviceEdit_modal.name' }}</label>
           </div>
         </div>
       </form>

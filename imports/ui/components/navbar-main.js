@@ -6,7 +6,7 @@ import './navbar-main.html';
 
 Template.NavbarMain.onRendered(function(){
 
-  var instance = Template.instance();
+  const instance = Template.instance();
 
   instance.$('.button-collapse').sideNav({
     closeOnClick: true

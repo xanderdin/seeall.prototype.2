@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import { Devices } from '/imports/api/devices/devices.js';
 import { History } from '/imports/api/history/history.js';
@@ -6,9 +8,16 @@ import { Owners } from '/imports/api/owners/owners.js';
 import { Zones } from '/imports/api/zones/zones.js';
 
 
-Meteor.methods({
+export const setZoneArmed = new ValidatedMethod({
 
-  setZoneArmed: function(zoneId, isArmed) {
+  name: 'zones.setArmed',
+
+  validate: new SimpleSchema({
+    zoneId: { type: String },
+    isArmed: { type: Boolean }
+  }).validator(),
+
+  run({ zoneId, isArmed }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -17,7 +26,7 @@ Meteor.methods({
       );
     }
 
-    var zone = Zones.findOne(
+    const zone = Zones.findOne(
       { _id: zoneId },
       { fields: { _id: 1, deviceId: 1, num: 1 }}
     );
@@ -27,7 +36,7 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
+    const owner = Owners.findOne(
       { deviceId: zone.deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
@@ -73,10 +82,20 @@ Meteor.methods({
         }
       }
     );
-  },
+  }
+});
 
 
-  updateZone: function(newZone) {
+export const updateZone = new ValidatedMethod({
+
+  name: 'zones.udpate',
+
+  validate: new SimpleSchema({
+    zoneId: { type: String },
+    zoneName: { type: String, max: 128 }
+  }).validator(),
+
+  run({ zoneId, zoneName }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -85,8 +104,8 @@ Meteor.methods({
       );
     }
 
-    var zone = Zones.findOne(
-      { _id: newZone._id },
+    const zone = Zones.findOne(
+      { _id: zoneId },
       { fields: { _id: 1, deviceId: 1, num: 1 }}
     );
 
@@ -95,7 +114,7 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
+    const owner = Owners.findOne(
       { deviceId: zone.deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
@@ -111,7 +130,7 @@ Meteor.methods({
 
       { _id: zone._id },
 
-      { $set: { name: newZone.name } },
+      { $set: { name: zoneName } },
 
       function(error, result) {
 
@@ -127,17 +146,26 @@ Meteor.methods({
               event: 'History.zone_name_set',
               deviceId: zone.deviceId,
               zoneNum: zone.num,
-              zoneNewName: newZone.name
+              zoneNewName: zoneName
             }
           );
 
         }
       }
     );
-  },
+  }
+});
 
 
-  removeZone: function(zoneId) {
+export const removeZone = new ValidatedMethod({
+
+  name: 'zones.remove',
+
+  validate: new SimpleSchema({
+    zoneId: { type: String }
+  }).validator(),
+
+  run({ zoneId }) {
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -146,7 +174,7 @@ Meteor.methods({
       );
     }
 
-    var zone = Zones.findOne(
+    const zone = Zones.findOne(
       { _id: zoneId },
       { fields: { _id: 1, deviceId: 1, num: 1 }}
     );
@@ -156,7 +184,7 @@ Meteor.methods({
     }
 
     // Check if user is owning this device
-    var owner = Owners.findOne(
+    const owner = Owners.findOne(
       { deviceId: zone.deviceId, userId: this.userId },
       { fields: { _id: 1 }}
     );
@@ -192,5 +220,4 @@ Meteor.methods({
       }
     );
   }
-
 });

@@ -5,7 +5,7 @@ import './btn-floating-add-new-device.html';
 
 Template.BtnFloating_AddNewDevice.onRendered(function() {
 
-  var instance = Template.instance();
+  const instance = Template.instance();
 
   instance.$('.modal-trigger').leanModal();
 

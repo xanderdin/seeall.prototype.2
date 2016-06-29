@@ -7,7 +7,7 @@ import './navbar-device-details.html';
 
 Template.NavbarDeviceDetails.onRendered(() => {
 
-  var instance = Template.instance();
+  const instance = Template.instance();
 
   // Device menu
   instance.$('.dropdown-button').dropdown({
