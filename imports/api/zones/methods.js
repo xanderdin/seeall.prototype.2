@@ -7,6 +7,8 @@ import { History } from '/imports/api/history/history.js';
 import { Owners } from '/imports/api/owners/owners.js';
 import { Zones } from '/imports/api/zones/zones.js';
 
+import { writeHistory } from '/imports/api/history/methods.js';
+
 
 export const setZoneArmed = new ValidatedMethod({
 
@@ -67,16 +69,20 @@ export const setZoneArmed = new ValidatedMethod({
 
         } else {
 
-          var zonesNums = [];
+          var zonesNum = [];
 
-          zonesNums.push(zone.num);
+          zonesNum.push(zone.num);
 
-          Meteor.call(
-            'writeHistory',
+          writeHistory.call(
             {
-              event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
+              event: isArmed ? 'cmd_arm' : 'cmd_disarm',
               deviceId: zone.deviceId,
-              zonesNums: zonesNums
+              zonesNum: zonesNum
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err);
+              }
             }
           );
         }
@@ -96,6 +102,7 @@ export const updateZone = new ValidatedMethod({
   }).validator(),
 
   run({ zoneId, zoneName }) {
+
 
     if (!this.userId) {
       throw new Meteor.Error(
@@ -128,11 +135,13 @@ export const updateZone = new ValidatedMethod({
 
     Zones.update(
 
-      { _id: zone._id },
+      { _id: zone._id },  // selector
 
-      { $set: { name: zoneName } },
+      { $set: { name: zoneName } },  // modifier
 
-      function(error, result) {
+      { removeEmptyStrings: false },  // options
+
+      function(error, result) { // callback
 
         if (error) {
 
@@ -140,13 +149,17 @@ export const updateZone = new ValidatedMethod({
 
         } else {
 
-          Meteor.call(
-            'writeHistory',
+          writeHistory.call(
             {
-              event: 'History.zone_name_set',
+              event: 'zone_name_set',
               deviceId: zone.deviceId,
-              zoneNum: zone.num,
-              zoneNewName: zoneName
+              zonesNum: [zone.num],
+              textData: zoneName
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err);
+              }
             }
           );
 
@@ -208,12 +221,16 @@ export const removeZone = new ValidatedMethod({
 
         } else {
 
-          Meteor.call(
-            'writeHistory',
+          writeHistory.call(
             {
-              event: 'History.zone_removed',
+              event: 'zone_removed',
               deviceId: zone.deviceId,
-              zoneNum: zone.num
+              zonesNum: [zone.num]
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err);
+              }
             }
           );
         }

@@ -1,6 +1,8 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+import './functions.js';
+
 
 export const Owners = new Mongo.Collection('owners');
 
@@ -24,7 +26,7 @@ Owners.attachSchema(new SimpleSchema({
 Owners.helpers({
 
   formatNum() {
-    return this.num < 10 ? '0' + this.num : '' + this.num;
+    return formatOwnerNum(this.num);
   },
 
   name() {

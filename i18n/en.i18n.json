@@ -84,9 +84,9 @@
 
   "History": {
     "device_added": "Device added; U:__user_name__",
-    "device_name_set": "Device named '__device_new_name__'; U:__user_name__",
+    "device_name_set": "Device renamed '__device_new_name__'; U:__user_name__",
     "device_removed": "Device removed; U:__user_name__",
-    "zone_name_set": "Zone __zone_num__ named '__zone_new_name__'; U:__user_name__",
+    "zone_name_set": "Zone __zone_num__ renamed '__zone_new_name__'; U:__user_name__",
     "zone_removed": "Zone __zone_num__ removed; U:__user_name__",
     "owner_added": "User added: __user_name__",
     "owner_removed": "User removed: __user_name__",

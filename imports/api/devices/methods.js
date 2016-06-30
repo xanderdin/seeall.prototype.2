@@ -7,6 +7,8 @@ import { History } from '/imports/api/history/history.js';
 import { Owners } from '/imports/api/owners/owners.js';
 import { Zones } from '/imports/api/zones/zones.js';
 
+import { writeHistory } from '/imports/api/history/methods.js';
+
 
 export const addNewDevice = new ValidatedMethod({
 
@@ -65,11 +67,15 @@ export const addNewDevice = new ValidatedMethod({
 
           function(error, result) {
 
-            Meteor.call(
-              'writeHistory',
+            writeHistory.call(
               {
-                event: 'History.owner_added',
+                event: 'owner_added',
                 deviceId: oldDevice._id
+              },
+              (err, res) => {
+                if (err) {
+                  console.log(err);
+                }
               }
             );
           }
@@ -97,11 +103,15 @@ export const addNewDevice = new ValidatedMethod({
 
           } else {
 
-            Meteor.call(
-              'writeHistory',
+            writeHistory.call(
               {
-                event: 'History.device_added',
+                event: 'device_added',
                 deviceId: deviceId
+              },
+              (err, res) => {
+                if (err) {
+                  console.log(err);
+                }
               }
             );
 
@@ -166,11 +176,13 @@ export const updateDevice = new ValidatedMethod({
 
     Devices.update(
 
-      { _id: deviceId },
+      { _id: deviceId }, // selector
 
-      { $set: { name: deviceName } },
+      { $set: { name: deviceName } },  // modifier
 
-      function(error, result) {
+      { removeEmptyStrings: false },  // options
+
+      function(error, result) {  // callback
 
         if (error) {
 
@@ -178,12 +190,16 @@ export const updateDevice = new ValidatedMethod({
 
         } else {
 
-          Meteor.call(
-            'writeHistory',
+          writeHistory.call(
             {
-              event: 'History.device_name_set',
+              event: 'device_name_set',
               deviceId: deviceId,
-              deviceNewName: deviceName
+              textData: deviceName
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err);
+              }
             }
           );
         }
@@ -244,11 +260,15 @@ export const removeDevice = new ValidatedMethod({
 
           } else {
 
-            Meteor.call(
-              'writeHistory',
+            writeHistory.call(
               {
-                event: 'History.owner_removed',
+                event: 'owner_removed',
                 deviceId: deviceId
+              },
+              (err, res) => {
+                if (err) {
+                  console.log(err);
+                }
               }
             );
           }
@@ -269,11 +289,15 @@ export const removeDevice = new ValidatedMethod({
 
           } else {
 
-            Meteor.call(
-              'writeHistory',
+            writeHistory.call(
               {
-                event: 'History.device_removed',
+                event: 'device_removed',
                 deviceId: deviceId
+              },
+              (err, res) => {
+                if (err) {
+                  console.log(err);
+                }
               }
             );
           }
@@ -317,11 +341,15 @@ export const getDeviceState = new ValidatedMethod({
       );
     }
 
-    Meteor.call(
-      'writeHistory',
+    writeHistory.call(
       {
-        event: 'History.cmd_get_state',
+        event: 'cmd_get_state',
         deviceId: deviceId
+      },
+      (err, res) => {
+        if (err) {
+          console.log(err);
+        }
       }
     );
   }
@@ -374,11 +402,11 @@ export const setDeviceArmed = new ValidatedMethod({
     );
 
     var zonesIds = [];
-    var zonesNums = [];
+    var zonesNum = [];
 
     zones.forEach(function(zone) {
       zonesIds.push(zone._id);
-      zonesNums.push(zone.num)
+      zonesNum.push(zone.num)
     });
 
     Zones.update(
@@ -400,12 +428,16 @@ export const setDeviceArmed = new ValidatedMethod({
 
         } else {
 
-          Meteor.call(
-            'writeHistory',
+          writeHistory.call(
             {
-              event: isArmed ? 'History.cmd_arm' : 'History.cmd_disarm',
+              event: isArmed ? 'cmd_arm' : 'cmd_disarm',
               deviceId: deviceId,
-              zonesNums: zonesNums
+              zonesNum: zonesNum
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err);
+              }
             }
           );
         }

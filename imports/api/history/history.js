@@ -5,6 +5,7 @@ import { TAPi18n } from 'meteor/tap:i18n';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import '/imports/api/zones/functions.js';
+import '/imports/api/owners/functions.js';
 
 
 export const History = new Mongo.Collection('history');
@@ -32,19 +33,15 @@ History.attachSchema(new SimpleSchema({
     regEx: /^[0-9a-f]{12}$/,
     optional: true
   },
-  deviceNewName: {
-    type: String,
-    optional: true
-  },
-  zoneNum: {
-    type: Number,
-    optional: true
-  },
-  zonesNums: {
+  zonesNum: {
     type: [Number],
     optional: true
   },
-  zoneNewName: {
+  ownerNum: {
+    type: Number,
+    optional: true
+  },
+  textData: {
     type: String,
     optional: true
   }
@@ -63,85 +60,84 @@ History.helpers({
 
   text(lang) {
 
-    // if (!this.data) {
-    //   return null;
-    // }
-
-    var res = '';
-    var options;
+    const options = {};
 
     switch (this.event) {
 
-      case 'History.device_added':
-        options = {
-          user_name: this.username, //getUsername(this.userId),
-          device_id: this.deviceId
-        };
+      case 'device_added':
+        options.user_name = makeUserLine(this);
+        options.device_id = undefinedToEmptyString(this.deviceId);
         break;
 
-      case 'History.device_name_set':
-        options = {
-          user_name: this.username, //getUsername(this.userId),
-          device_new_name: this.deviceNewName
-        };
+      case 'device_name_set':
+        options.user_name = makeUserLine(this);
+        options.device_new_name = undefinedToEmptyString(this.textData);
         break;
 
-      case 'History.owner_removed':
-      case 'History.device_removed':
-        options = {
-          user_name: this.username //getUsername(this.userId)
-        };
+      case 'owner_removed':
+      case 'device_removed':
+        options.user_name = makeUserLine(this);
         break;
 
-      case 'History.cmd_get_state':
-        options = {
-          user_name: this.username //getUsername(this.userId)
-        };
+      case 'cmd_get_state':
+        options.user_name = makeUserLine(this);
         break;
 
-      case 'History.cmd_arm':
-      case 'History.cmd_disarm':
-        options = {
-          user_name: this.username, //getUsername(this.userId),
-          zones_ranges: makeZonesRanges(this.zonesNums)
-        };
+      case 'cmd_arm':
+      case 'cmd_disarm':
+        options.user_name = makeUserLine(this);
+        options.zones_ranges = makeZonesRanges(this.zonesNum);
         break;
 
-      case 'History.zone_name_set':
-        options = {
-          user_name: this.username, //getUsername(this.userId),
-          zone_num: formatZoneNum(this.zoneNum),
-          zone_new_name: this.zoneNewName
-        };
+      case 'zone_name_set':
+        options.user_name = makeUserLine(this);
+        options.zone_num = formatZoneNum(this.zonesNum[0]);
+        options.zone_new_name = undefinedToEmptyString(this.textData);
         break;
 
-      case 'History.zone_removed':
-        options = {
-          user_name: this.username, //getUsername(this.userId),
-          zone_num: formatZoneNum(this.zoneNum)
-        };
+      case 'zone_removed':
+        options.user_name = makeUserLine(this);
+        options.zone_num = formatZoneNum(this.zonesNum[0]);
         break;
 
-      case 'History.owner_added':
-        options = {
-          user_name: this.username, //getUsername(this.userId)
-        };
+      case 'owner_added':
+        options.user_name = makeUserLine(this);
         break;
 
       default:
+        options.defaultValue = this.event;
 
     }
 
-    if (options) {
-      res = TAPi18n.__(this.event, options, lang);
-    }
-
-    return res;
+    return TAPi18n.__('History.' + this.event, options, lang);
   }
 });
 
 
-var getUsername = function(userId) {
+const makeUserLine = function(v) {
+  var res = '';
+  if (v) {
+    if (v.ownerNum) {
+      res = formatOwnerNum(v.ownerNum);
+    }
+    if (v.username) {
+      if (res) {
+        res += '(' + v.username + ')';
+      } else {
+        res = v.username;
+      }
+    }
+  }
+  return res;
+}
+
+
+const undefinedToEmptyString = function(v) {
+  return v ? v : '';
+};
+
+
+const getUsername = function(userId) {
   var user = Meteor.users.findOne(userId);
   if (user) {
     return user.username;
@@ -150,41 +146,41 @@ var getUsername = function(userId) {
 };
 
 
-var makeZonesRanges = function(zonesNums) {
+const makeZonesRanges = function(zonesNum) {
 
   var res = '';
 
-  if (!zonesNums) {
+  if (!zonesNum) {
     return res;
   }
 
   var i = 0;
   var j = 0;
 
-  for (; i < zonesNums.length; i++) {
+  for (; i < zonesNum.length; i++) {
 
     // Simply add first number to response
     if (i === 0) {
-      res = formatZoneNum(zonesNums[i]);
+      res = formatZoneNum(zonesNum[i]);
       j++;
       continue;
     }
 
     var prev_i = i - 1;
 
-    if (zonesNums[prev_i] === zonesNums[i] - 1) { // In sequence
-      if (i === zonesNums.length - 1) { // Last element
+    if (zonesNum[prev_i] === zonesNum[i] - 1) { // In sequence
+      if (i === zonesNum.length - 1) { // Last element
         var ch = j > 0 ? (j === 1 ? ',' : '-') : ',';
-        res += (ch + formatZoneNum(zonesNums[i]));
+        res += (ch + formatZoneNum(zonesNum[i]));
       } else {
         j++;
       }
     } else { // Out of sequence
       if (j > 0 && prev_i > 0) { // But was in sequence (&& previous is not first)
         var ch = j === 1 ? ',' : '-';
-        res += (ch + formatZoneNum(zonesNums[prev_i]));
+        res += (ch + formatZoneNum(zonesNum[prev_i]));
       }
-      res += (',' + formatZoneNum(zonesNums[i]));
+      res += (',' + formatZoneNum(zonesNum[i]));
       j = 0;
     }
 
