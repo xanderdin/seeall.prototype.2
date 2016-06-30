@@ -12,7 +12,8 @@ Meteor.publishComposite('devices', function(deviceId) {
     isBatteryLow: 1,
     isPowerLost: 1,
     isFailure: 1,
-    isOff: 1
+    isOff: 1,
+    simBalance: 1,
   };
 
   return {

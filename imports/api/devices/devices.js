@@ -55,9 +55,10 @@ Devices.attachSchema(new SimpleSchema({
     type: Boolean,
     defaultValue: false
   },
-  // simBalance: {
-  //
-  // },
+  simBalance: {
+    type: Number,
+    optional: true
+  },
 }));
 
 
