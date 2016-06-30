@@ -22,8 +22,12 @@
 
   <ul id="zone-context-menu-{{ zone._id }}" class="dropdown-content">
     {{#unless zone.isSiren }}
-    <li><a href="" class="js-zone-arm">{{_ "arm" }}</a></li>
-    <li><a href="" class="js-zone-disarm">{{_ "disarm" }}</a></li>
+      {{#if zone.canArm }}
+      <li><a href="" class="js-zone-arm">{{_ "arm" }}</a></li>
+      {{/if}}
+      {{#if zone.canDisarm }}
+      <li><a href="" class="js-zone-disarm">{{_ "disarm" }}</a></li>
+      {{/if}}
     <!-- <li><a href="" class="js-zone-state">State</a></li> -->
     <li class="divider"></li>
     {{/unless}}

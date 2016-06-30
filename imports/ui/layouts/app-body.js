@@ -12,15 +12,19 @@ Template.App_body.events({
   'click .js-device-arm'(event) {
     event.preventDefault();
     if (this.device) {
-      Meteor.reconnect();
-      cmdArmDevice(this.device._id);
+      if (this.device.canArm()) {
+        Meteor.reconnect();
+        cmdArmDevice(this.device._id);
+      }
     }
   },
   'click .js-device-disarm'(event) {
     event.preventDefault();
     if (this.device) {
-      Meteor.reconnect();
-      cmdDisarmDevice(this.device._id);
+      if (this.device.canDisarm()) {
+        Meteor.reconnect();
+        cmdDisarmDevice(this.device._id);
+      }
     }
   },
   'click .js-device-state'(event) {

@@ -52,7 +52,6 @@ Template.Zone_card.events({
   'click .js-zone-arm'(event) {
     event.preventDefault();
     Meteor.reconnect();
-    // Meteor.call('setZoneArmed', this.zone._id, true);
     setZoneArmed.call(
       { zoneId: this.zone._id, isArmed: true },
       (err, res) => {
@@ -65,7 +64,6 @@ Template.Zone_card.events({
   'click .js-zone-disarm'(event) {
     event.preventDefault();
     Meteor.reconnect();
-    // Meteor.call('setZoneArmed', this.zone._id, false);
     setZoneArmed.call(
       { zoneId: this.zone._id, isArmed: false },
       (err, res) => {

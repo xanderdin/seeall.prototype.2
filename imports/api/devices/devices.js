@@ -127,6 +127,65 @@ Devices.helpers({
   },
 
 
+  canArm() {
+
+    // if (this.isOff) {
+    //   return false;
+    // }
+    // if (this.isOnline === false) {
+    //   return false;
+    // }
+
+    const zones = this.zones().fetch();
+
+    if (zones) {
+      var i;
+      for (i = 0; i < zones.length; i++) {
+        if (zones[i].canArm()) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  },
+
+
+  canDisarm() {
+
+    // if (this.isOff) {
+    //   return false;
+    // }
+    // if (this.isOnline === false) {
+    //   return false;
+    // }
+
+    const zones = this.zones().fetch();
+
+    if (zones) {
+      var i;
+      for (i = 0; i < zones.length; i++) {
+        if (zones[i].canDisarm()) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  },
+
+
+  // canGetState() {
+  //   if (this.isOff) {
+  //     return false;
+  //   }
+  //   if (this.isOnline === false) {
+  //     return false;
+  //   }
+  //   return true;
+  // },
+
+
   isInAlarm() {
 
     const zones = this.zones().fetch();

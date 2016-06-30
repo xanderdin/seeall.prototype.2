@@ -279,6 +279,34 @@ Zones.helpers({
     }
 
     return false;
+  },
+
+
+  canArm() {
+
+    if (this.isSiren()) {
+      return false;
+    }
+
+    if (this.isArmed !== true) {
+      return true;
+    }
+
+    return false;
+  },
+
+
+  canDisarm() {
+
+    if (this.isSiren()) {
+      return false;
+    }
+
+    if (this.isArmed === true) {
+      return true;
+    }
+
+    return false;
   }
 
 });
