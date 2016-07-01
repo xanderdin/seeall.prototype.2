@@ -3,33 +3,42 @@
     <div class="col s3 center">
       {{#if device.isOnline }}
         {{#if isLowMoney }}
-        <i class="material-icons orange white-text">attach_money</i>
+        <!-- <i class="material-icons orange white-text">attach_money</i> -->
+        <i class="fa fa-usd fa-fw orange white-text" aria-hidden="true"></i>
         {{else}}
-        <i class="material-icons" style="color: #a7ffeb">visibility</i>
+        <!-- <i class="material-icons" style="color: #a7ffeb">visibility</i> -->
+        <i class="fa fa-eye fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
         {{/if}}
       {{else}}
-      <i class="material-icons orange white-text">visibility_off</i>
+      <!-- <i class="material-icons orange white-text">visibility_off</i> -->
+      <i class="fa fa-eye-slash fa-fw orange white-text" aria-hidden="true"></i>
       {{/if}}
     </div>
     <div class="col s3 center">
       {{#if device.isTamperOpen }}
-      <i class="material-icons red accent-3 white-text">scanner</i>
+      <!-- <i class="material-icons red accent-3 white-text">scanner</i> -->
+      <i class="fa fa-folder-open fa-fw red accent-3 white-text" aria-hidden="true"></i>
       {{else}}
-      <i class="material-icons" style="color: #a7ffeb">scanner</i>
+      <!-- <i class="material-icons" style="color: #a7ffeb">scanner</i> -->
+      <i class="fa fa-folder-open fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
       {{/if}}
     </div>
     <div class="col s3 center">
       {{#if device.isBatteryLow }}
-      <i class="material-icons orange white-text">battery_alert</i>
+      <!-- <i class="material-icons orange white-text">battery_alert</i> -->
+      <i class="fa fa-battery-empty fa-fw orange white-text" aria-hidden="true"></i>
       {{else}}
-      <i class="material-icons" style="color: #a7ffeb">battery_full</i>
+      <!-- <i class="material-icons" style="color: #a7ffeb">battery_full</i> -->
+      <i class="fa fa-battery-full fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
       {{/if}}
     </div>
     <div class="col s3 center">
       {{#if device.isPowerLost }}
-      <i class="material-icons orange white-text">power</i>
+      <!-- <i class="material-icons orange white-text">power</i> -->
+      <i class="fa fa-plug fa-fw orange white-text" aria-hidden="true"></i>
       {{else}}
-      <i class="material-icons" style="color: #a7ffeb">power</i>
+      <!-- <i class="material-icons" style="color: #a7ffeb">power</i> -->
+      <i class="fa fa-plug fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
       {{/if}}
     </div>
   </div>

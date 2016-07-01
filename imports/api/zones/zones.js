@@ -154,38 +154,50 @@ Zones.helpers({
       case 'detector':
 
         if (this.isArmed === undefined || this.isArmed === null) {
-          result = '<i class="material-icons medium" style="color: '
-            + this.colorStyle()
-            + '">help_outline</i>';
+          // result = '<i class="material-icons medium" style="color: '
+          //   + this.colorStyle()
+          //   + '">help_outline</i>';
+          result = '<i class="fa fa-question-circle-o fa-fw fa-4x" aria-hidden="true"'
+            + ' style="color: ' + this.colorStyle() + '"></i>';
         } else if (this.isArmed === true && this.isInAlarm()) {
-          result = '<i class="material-icons medium" style="color: '
-            + this.colorStyle()
-            + '">notifications_active</i>';
+          // result = '<i class="material-icons medium" style="color: '
+          //   + this.colorStyle()
+          //   + '">notifications_active</i>';
+          result = '<i class="fa fa-exclamation-triangle fa-fw fa-4x" aria-hidden="true"'
+            + ' style="color: ' + this.colorStyle() + '"></i>';
         } else if (this.isArmed) {
-          result = '<i class="material-icons medium" style="color: '
-            + this.colorStyle()
-            + '">lock</i>';
+          // result = '<i class="material-icons medium" style="color: '
+          //   + this.colorStyle()
+          //   + '">lock</i>';
+          result = '<i class="fa fa-lock fa-fw fa-4x" aria-hidden="true"'
+            + ' style="color: ' + this.colorStyle() + '"></i>';
         } else {
-          result = '<i class="material-icons medium" style="color: '
-            + this.colorStyle()
-            + '">lock_open</i>';
+          // result = '<i class="material-icons medium" style="color: '
+          //   + this.colorStyle()
+          //   + '">lock_open</i>';
+          result = '<i class="fa fa-unlock fa-fw fa-4x" aria-hidden="true"'
+            + ' style="color: ' + this.colorStyle() + '"></i>';
         }
 
         break;
 
       case 'siren':
 
-        result = '<i class="material-icons medium" style="color: '
-          + this.colorStyle()
-          + '">volume_up</i>';
+        // result = '<i class="material-icons medium" style="color: '
+        //   + this.colorStyle()
+        //   + '">volume_up</i>';
+        result = '<i class="fa fa-volume-up fa-fw fa-4x" aria-hidden="true"'
+          + ' style="color: ' + this.colorStyle() + '"></i>';
 
         break;
 
       default:
 
-        result = '<i class="material-icons medium" style="color: '
-          + this.colorStyle()
-          + '">help_outline</i>';
+        // result = '<i class="material-icons medium" style="color: '
+        //   + this.colorStyle()
+        //   + '">help_outline</i>';
+        result = '<i class="fa fa-question-circle-o fa-fw fa-4x" aria-hidden="true"'
+          + ' style="color: ' + this.colorStyle() + '"></i>';
 
         break;
     }

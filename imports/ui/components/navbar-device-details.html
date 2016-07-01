@@ -5,12 +5,21 @@
 
       <div class="nav-wrapper blue-grey">
 
-        <ul class="left">
-          <li><a href="/"><i class="material-icons">arrow_back</i></a></li>
-        </ul>
+        <!-- <ul class="left">
+          <li> -->
+            <a href="/" class="left">
+              <!-- <i class="material-icons">arrow_back</i> -->
+              <i class="fa fa-arrow-left fa-fw fa-2x" aria-hidden="true"></i>
+            </a>
+          <!-- </li>
+        </ul> -->
 
         <a href="/" class="brand-logo">{{ device.nameOrId }}</a>
-        <a href="" data-activates="mobile-dropdown" class="right dropdown-button button-collapse"><i class="material-icons">more_vert</i></a>
+
+        <a href="" data-activates="mobile-dropdown" class="right dropdown-button button-collapse">
+          <!-- <i class="material-icons">more_vert</i> -->
+          <i class="fa fa-ellipsis-v fa-fw" aria-hidden="true"></i>
+        </a>
 
         <!-- Wide screen menu -->
         <ul class="right hide-on-med-and-down">
@@ -24,7 +33,7 @@
 
       </div>
 
-      <ul class="tabs">
+      <ul class="tabs" style="position: relative; top: -10px;">
         <li class="tab col s3"><a class="active" href="#tabInfo">{{_ "NavbarDeviceDetails.info" }}</a></li>
         <li class="tab col s3"><a href="#tabZones">{{_ "NavbarDeviceDetails.zones" }}</a></li>
         <li class="tab col s3"><a href="#tabHistory">{{_ "NavbarDeviceDetails.history" }}</a></li>

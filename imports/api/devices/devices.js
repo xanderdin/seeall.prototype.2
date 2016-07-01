@@ -233,25 +233,35 @@ Devices.helpers({
   mainIconTag() {
 
     if (this.isOff === true) {
-      return '<i class="material-icons medium" style="color: '
-        + this.colorStyle()
-        + '">power_settings_new</i>';
+      // return '<i class="material-icons medium" style="color: '
+      //   + this.colorStyle()
+      //   + '">power_settings_new</i>';
+      return '<i class="fa fa-power-off fa-fw fa-5x" aria-hidden="true"'
+        + ' style="color: ' + this.colorStyle() + '"></i>';
     } else if (this.isFailure === true) {
-      return '<i class="material-icons medium" style="color: '
-        + this.colorStyle()
-        + '">sentiment_very_dissatisfied</i>';
+      // return '<i class="material-icons medium" style="color: '
+      //   + this.colorStyle()
+      //   + '">sentiment_very_dissatisfied</i>';
+      return '<i class="fa fa-frown-o fa-fw fa-5x" aria-hidden="true"'
+        + ' style="color: ' + this.colorStyle() + '"></i>';
     } else if (this.isArmed() && this.isInAlarm()) {
-      return '<i class="material-icons medium" style="color: '
-        + this.colorStyle()
-        + '">notifications_active</i>';
+      // return '<i class="material-icons medium" style="color: '
+      //   + this.colorStyle()
+      //   + '">notifications_active</i>';
+      return '<i class="fa fa-exclamation-triangle fa-fw fa-5x" aria-hidden="true"'
+        + ' style="color: ' + this.colorStyle() + '"></i>';
     } else if (this.isArmed()) {
-      return '<i class="material-icons medium" style="color: '
-        + this.colorStyle()
-        + '">lock</i>';
+      // return '<i class="material-icons medium" style="color: '
+      //   + this.colorStyle()
+      //   + '">lock</i>';
+      return '<i class="fa fa-lock fa-fw fa-5x" aria-hidden="true"'
+        + ' style="color: ' + this.colorStyle() + '"></i>';
     } else {
-      return '<i class="material-icons medium" style="color: '
-        + this.colorStyle()
-        + '">lock_open</i>';
+      // return '<i class="material-icons medium" style="color: '
+      //   + this.colorStyle()
+      //   + '">lock_open</i>';
+      return '<i class="fa fa-unlock fa-fw fa-5x" aria-hidden="true"'
+        + ' style="color: ' + this.colorStyle() + '"></i>';
     }
   },
 

@@ -42,13 +42,22 @@
 
       <div class="card-action center row">
         <div class="col s4">
-          <a href="" class="btn waves-effect waves-light grey js-device-arm {{#unless device.canArm}}disabled{{/unless}}"><i class="material-icons">lock</i></a>
+          <a href="" class="btn waves-effect waves-light grey js-device-arm {{#unless device.canArm}}disabled{{/unless}}">
+            <!-- <i class="material-icons">lock</i> -->
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="col s4">
-          <a href="" class="btn waves-effect waves-light grey js-device-state"><i class="material-icons">refresh</i></a>
+          <a href="" class="btn waves-effect waves-light grey js-device-state">
+            <!-- <i class="material-icons">refresh</i> -->
+            <i class="fa fa-retweet" aria-hidden="true"></i>
+          </a>
         </div>
         <div class="col s4">
-          <a href="" class="btn waves-effect waves-light grey js-device-disarm {{#unless device.canDisarm}}disabled{{/unless}}"><i class="material-icons">lock_open</i></a>
+          <a href="" class="btn waves-effect waves-light grey js-device-disarm {{#unless device.canDisarm}}disabled{{/unless}}">
+            <!-- <i class="material-icons">lock_open</i> -->
+            <i class="fa fa-unlock" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
 
