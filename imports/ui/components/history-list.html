@@ -2,16 +2,16 @@
 
   {{#if history }}
 
-    <ul class="collection">
+    <table class="table table-striped">
       {{#each record in history }}
         {{> History_line record=record }}
       {{/each}}
-    </ul>
+    </table>
 
   {{else}}
 
     <div class="row">
-      <p class="col s12 center">
+      <p class="col-xs-12 text-center">
         {{_ "History_list.no_history" }}
       </p>
     </div>

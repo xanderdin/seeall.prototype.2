@@ -1,31 +1,30 @@
 <template name="NavbarMain">
 
-  <div class="navbar-fixed">
-    <nav>
+  <!-- <div class="navbar-fixed"> -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
 
-      <div class="nav-wrapper blue-grey">
+    <div class="container-fluid">
 
-        <a href="/" class="brand-logo">{{_ 'app_title' }}</a>
-        
-        <a href="" data-activates="mobile-menu" class="button-collapse">
-          <!-- <i class="material-icons">menu</i> -->
-          <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
-        </a>
-
-        <!-- Wide screen menu -->
-        <ul class="right hide-on-med-and-down">
-          {{> NavbarMainItems '' }}
-        </ul>
-
-        <!-- Mobile screen menu -->
-        <ul class="side-nav" id="mobile-menu">
-          {{> NavbarMainItems '' }}
-        </ul>
-
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main-collapse" aria-expanded="false">
+          <!-- <span class="sr-only">Toggle navigation</span> -->
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand">{{_ 'app_title' }}</a>
       </div>
 
-    </nav>
-  </div>
+      <div class="collapse navbar-collapse" id="navbar-main-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          {{> NavbarMainItems '' }}
+        </ul>
+      </div>
+
+    </div>
+
+  </nav>
+  <!-- </div> -->
 
 </template>
 

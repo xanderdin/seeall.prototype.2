@@ -8,11 +8,11 @@ import './modal-device-edit.html';
 
 Template.DeviceEdit_modal.onRendered(function(){
 
-  const instance = Template.instance();
-
-  instance.$('input.js-char-count').characterCounter();
-
-  Materialize.updateTextFields();
+  // const instance = Template.instance();
+  //
+  // instance.$('input.js-char-count').characterCounter();
+  //
+  // Materialize.updateTextFields();
 });
 
 

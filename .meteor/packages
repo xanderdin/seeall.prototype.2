@@ -20,7 +20,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 accounts-password
 kadira:blaze-layout
 kadira:flow-router
-materialize:materialize@=0.97.5
 dburles:collection-helpers
 momentjs:moment
 tap:i18n

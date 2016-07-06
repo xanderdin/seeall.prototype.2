@@ -1,39 +1,44 @@
 <template name="Zone_card">
 
-  <div class="col s6 m4 l2">
-    <div class="card zone-card">
-      <span class="card-title">
-        <a href="" class="zone-context-menu-btn waves-effect waves-light btn {{ zone.colorClass }}" data-activates="zone-context-menu-{{ zone._id }}">
+  <div class="col-xs-6 col-md-4 col-lg-2">
+    <div class="panel panel-default zone-card">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <!-- <a href="" class="zone-context-menu-btn waves-effect waves-light btn {{ zone.colorClass }}" data-activates="zone-context-menu-{{ zone._id }}"> -->
           {{ zone.formatNum }}
-          <!-- <i class="material-icons right" style="padding-top: 5px;">more_vert</i> -->
-        </a>
-      </span>
-      <div class="zone-card-content card-content">
-        <p class="center-align">
-          <span class="zone-name truncate">{{#if zone.name }}{{ zone.name }}{{else}}&nbsp;{{/if}}</span>
+          <!-- </a> -->
+        </h3>
+        <div class="dropdown pull-right">
+          <button class="btn btn-default dropdown-toggle" type="button" id="ZoneCardDropdownMenu-{{ zone._id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="caret" aria-hidden="true"></span>
+          </button>
+          <ul id="zone-context-menu-{{ device._id }}" class="dropdown-menu" aria-labelledby="ZoneCardDropdownMenu-{{ zone._id }}">
+            {{#unless zone.isSiren }}
+              {{#if zone.canArm }}
+              <li><a href="" class="js-zone-arm">{{_ "arm" }}</a></li>
+              {{/if}}
+              {{#if zone.canDisarm }}
+              <li><a href="" class="js-zone-disarm">{{_ "disarm" }}</a></li>
+              {{/if}}
+            <!-- <li><a href="" class="js-zone-state">State</a></li> -->
+            <li role="separator" class="divider"></li>
+            {{/unless}}
+            <li><a href="#ZoneEdit_{{ zone._id }}" data-toggle="modal" class="js-zone-edit">{{_ "edit" }}</a></li>
+            <li><a href="#ZoneRemove_{{ zone._id }}" data-toggle="modal" class="js-zone-remove">{{_ "remove" }}</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel-body text-center">
+        <p>
+          {{#if zone.name }}{{ zone.name }}{{else}}&nbsp;{{/if}}
         </p>
-        <p class="center-align">
+        <p>
           {{{ zone.mainIconTag }}}
         </p>
+        {{> ZoneStatusLine zone=zone }}
       </div>
-      {{> ZoneStatusLine zone=zone }}
     </div>
   </div>
-
-  <ul id="zone-context-menu-{{ zone._id }}" class="dropdown-content">
-    {{#unless zone.isSiren }}
-      {{#if zone.canArm }}
-      <li><a href="" class="js-zone-arm">{{_ "arm" }}</a></li>
-      {{/if}}
-      {{#if zone.canDisarm }}
-      <li><a href="" class="js-zone-disarm">{{_ "disarm" }}</a></li>
-      {{/if}}
-    <!-- <li><a href="" class="js-zone-state">State</a></li> -->
-    <li class="divider"></li>
-    {{/unless}}
-    <li><a href="#ZoneEdit_{{ zone._id }}" class="modal-trigger js-zone-edit">{{_ "edit" }}</a></li>
-    <li><a href="#ZoneRemove_{{ zone._id }}" class="modal-trigger js-zone-remove">{{_ "remove" }}</a></li>
-  </ul>
 
   {{> ZoneEdit_modal zone=zone }}
   {{> ZoneRemove_modal zone=zone }}

@@ -7,6 +7,10 @@ import './helpers.js';
 import './funcs.js';
 
 
+import bootstrap from 'bootstrap';
+import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+
 prefClientLanguage = new PreferenceVar(
   'clientLanguage',
   getBrowserLanguage(),

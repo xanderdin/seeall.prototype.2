@@ -6,11 +6,11 @@ import './navbar-main.html';
 
 Template.NavbarMain.onRendered(function(){
 
-  const instance = Template.instance();
-
-  instance.$('.button-collapse').sideNav({
-    closeOnClick: true
-  });
+  // const instance = Template.instance();
+  //
+  // instance.$('.button-collapse').sideNav({
+  //   closeOnClick: true
+  // });
 });
 
 

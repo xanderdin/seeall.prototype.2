@@ -1,6 +1,6 @@
 <template name="ZoneStatusLine">
   <div class="row">
-    <div class="col s3 center">
+    <div class="col-xs-3 center">
       {{#if zone.isLinkLost }}
       <!-- <i class="material-icons orange white-text">visibility_off</i> -->
       <i class="fa fa-eye-slash fa-fw orange white-text" aria-hidden="true"></i>
@@ -9,7 +9,7 @@
       <i class="fa fa-eye fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
       {{/if}}
     </div>
-    <div class="col s3 center">
+    <div class="col-xs-3 center">
       {{#if zone.isTamperOpen }}
       <!-- <i class="material-icons red accent-3 white-text">scanner</i> -->
       <i class="fa fa-folder-open fa-fw red accent-3 white-text" aria-hidden="true"></i>
@@ -18,7 +18,7 @@
       <i class="fa fa-folder-open fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
       {{/if}}
     </div>
-    <div class="col s3 center">
+    <div class="col-xs-3 center">
       {{#if zone.isBatteryLow }}
       <!-- <i class="material-icons orange white-text">battery_alert</i> -->
       <i class="fa fa-battery-empty fa-fw orange white-text" aria-hidden="true"></i>
@@ -27,7 +27,7 @@
       <i class="fa fa-battery-full fa-fw" aria-hidden="true" style="color: #a7ffeb"></i>
       {{/if}}
     </div>
-    <div class="col s3 center">
+    <div class="col-xs-3 center">
       {{#if zone.isPowerLost }}
       <!-- <i class="material-icons orange white-text">power</i> -->
       <i class="fa fa-plug fa-fw orange white-text" aria-hidden="true"></i>

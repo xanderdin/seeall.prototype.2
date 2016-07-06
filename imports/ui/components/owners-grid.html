@@ -3,14 +3,14 @@
   <div class="row">
 
   {{#if owners }}
-  
+
     {{#each owner in owners }}
       {{> Owner_card owner=owner }}
     {{/each}}
 
   {{else}}
 
-      <p class="col s12 center">
+      <p class="col-xs-12 center">
         {{_ "Owners_grid.no_users" }}
       </p>
 

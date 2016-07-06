@@ -8,9 +8,9 @@ import './modal-device-add-new.html';
 
 Template.AddNewDevice_modal.onRendered(function(){
 
-  const instance = Template.instance();
-
-  instance.$('input#newDeviceGid').characterCounter();
+  // const instance = Template.instance();
+  //
+  // instance.$('input#newDeviceGid').characterCounter();
 });
 
 

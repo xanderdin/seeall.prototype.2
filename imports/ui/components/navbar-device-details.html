@@ -1,47 +1,57 @@
 <template name="NavbarDeviceDetails">
 
-  <div class="navbar-fixed">
-    <nav>
+  <!-- <div class="navbar-fixed"> -->
+    <!-- <nav> -->
 
-      <div class="nav-wrapper blue-grey">
+      <!-- <div class="nav-wrapper blue-grey"> -->
 
-        <!-- <ul class="left">
-          <li> -->
-            <a href="/" class="left">
-              <!-- <i class="material-icons">arrow_back</i> -->
-              <i class="fa fa-arrow-left fa-fw fa-2x" aria-hidden="true"></i>
-            </a>
-          <!-- </li>
-        </ul> -->
+        <!-- <a href="/" class="left">
+          <i class="fa fa-arrow-left fa-fw fa-2x" aria-hidden="true"></i>
+        </a>
 
         <a href="/" class="brand-logo">{{ device.nameOrId }}</a>
 
         <a href="" data-activates="mobile-dropdown" class="right dropdown-button button-collapse">
-          <!-- <i class="material-icons">more_vert</i> -->
           <i class="fa fa-ellipsis-v fa-fw" aria-hidden="true"></i>
-        </a>
+        </a> -->
 
         <!-- Wide screen menu -->
-        <ul class="right hide-on-med-and-down">
+        <!-- <ul class="right hide-on-med-and-down">
           {{> NavbarDeviceDetailsItems device=device }}
-        </ul>
+        </ul> -->
 
         <!-- Mobile screen menu -->
-        <ul class="dropdown-content" id="mobile-dropdown">
+        <!-- <ul class="dropdown-content" id="mobile-dropdown">
           {{> NavbarDeviceDetailsItems device=device }}
-        </ul>
+        </ul> -->
 
-      </div>
+      <!-- </div> -->
 
-      <ul class="tabs" style="position: relative; top: -10px;">
-        <li class="tab col s3"><a class="active" href="#tabInfo">{{_ "NavbarDeviceDetails.info" }}</a></li>
-        <li class="tab col s3"><a href="#tabZones">{{_ "NavbarDeviceDetails.zones" }}</a></li>
-        <li class="tab col s3"><a href="#tabHistory">{{_ "NavbarDeviceDetails.history" }}</a></li>
-        <li class="tab col s3"><a href="#tabUsers">{{_ "NavbarDeviceDetails.users" }}</a></li>
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#tabInfo" aria-controls="tabInfo" role="tab" data-toggle="tab">
+            {{_ "NavbarDeviceDetails.info" }}
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#tabZones" aria-controls="tabZones" role="tab" data-toggle="tab">
+            {{_ "NavbarDeviceDetails.zones" }}
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#tabHistory" aria-controls="tabHistory" role="tab" data-toggle="tab">
+            {{_ "NavbarDeviceDetails.history" }}
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#tabUsers" aria-controls="tabUsers" role="tab" data-toggle="tab">
+            {{_ "NavbarDeviceDetails.users" }}
+          </a>
+        </li>
       </ul>
 
-    </nav>
-  </div>
+    <!-- </nav> -->
+  <!-- </div> -->
 
 </template>
 

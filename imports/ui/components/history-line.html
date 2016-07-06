@@ -1,19 +1,25 @@
 <template name="History_line">
 
-  <li class="collection-item">
-    <div class="row">
-      <div class="col s6 left-align">
-        {{ record.time }}
+  <tr>
+    <td>
+      {{ record.time }}
+    </td>
+    <td>
+      {{ record.date }}
+    </td>
+    <td>
+      <!-- <div class="row">
+        <div class="col-xs-6 left-align">
+        </div>
+        <div class="col-xs-6 right-align">
+        </div>
       </div>
-      <div class="col s6 right-align">
-        {{ record.date }}
-      </div>
-    </div>
-    <div class="truncate">
-      <!-- {{ record.info }} -->
-      <!-- {{_ record.data.event record.data.param }} -->
-      {{ record.text }}
-    </div>
-  </li>
+      <div class="truncate"> -->
+        <!-- {{ record.info }} -->
+        <!-- {{_ record.data.event record.data.param }} -->
+        {{ record.text }}
+      <!-- </div> -->
+    </td>
+  </tr>
 
 </template>

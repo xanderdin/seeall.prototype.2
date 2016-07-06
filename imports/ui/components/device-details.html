@@ -2,9 +2,9 @@
 
   {{> NavbarDeviceDetails device=device }}
 
-  <div class="row" style="padding-top: 48px;">
+  <div class="row tab-content">
 
-    <div class="col s12" id="tabInfo">
+    <div role="tabpanel" class="tab-pane active col-xs-12" id="tabInfo">
 
       <div class="row">
         {{> Device_card device=device deviceDetails=true }}
@@ -14,7 +14,7 @@
 
     </div>
 
-    <div class="col s12" id="tabZones">
+    <div role="tabpanel" class="tab-pane col-xs-12" id="tabZones">
 
       {{> Zones_grid zones=zones }}
 
@@ -22,13 +22,13 @@
 
     </div>
 
-    <div class="col s12" id="tabHistory">
+    <div role="tabpanel" class="tab-pane col-xs-12" id="tabHistory">
 
       {{> History_list history=history }}
 
     </div>
 
-    <div class="col s12" id="tabUsers">
+    <div role="tabpanel" class="tab-pane col-xs-12" id="tabUsers">
 
       {{> Owners_grid owners=owners }}
 

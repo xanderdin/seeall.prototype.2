@@ -1,30 +1,31 @@
 <template name="AddNewDevice_modal">
 
-  <div class="modal modal-fixed-footer" id="addNewDeviceDialog">
-    <div class="modal-content">
-      <h6>{{_ "AddNewDevice_modal.title" }}</h6>
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12 m6">
-              <input type="text" name="newDeviceGid" id="newDeviceGid" class="validate" length="12" maxlength="12" pattern="[0-9a-f]{12}" required>
+  <div id="addNewDeviceDialog" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">{{_ "AddNewDevice_modal.title" }}</h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <input type="text" name="newDeviceGid" id="newDeviceGid" class="form-control" maxlength="12" pattern="[0-9a-f]{12}" required>
               <label for="newDeviceGid">GID</label>
             </div>
-            <div class="input-field col s12 m6">
-              <input type="number" name="newDeviceUserNum" id="newDeviceUserNum" class="validate" max="32" min="1" required>
+            <div class="form-group">
+              <input type="number" name="newDeviceUserNum" id="newDeviceUserNum" class="form-control" max="32" min="1" required>
               <label for="newDeviceUserNum">{{_ "AddNewDevice_modal.user_num" }}</label>
             </div>
-            <!-- <div class="input-field col s12">
-              <input type="text" name="newDeviceName" id="newDeviceName" class="validate">
-              <label for="newDeviceName">{{_ "AddNewDevice_modal.name" }}</label>
-            </div> -->
-          </div>
-        </form>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <a href="" class="btn btn-primary js-add-new-device">{{_ "AddNewDevice_modal.add" }}</a>
+          <a href="" class="btn btn-default close" data-dismiss="modal">{{_ "cancel" }}</a>
+        </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat js-add-new-device">{{_ "AddNewDevice_modal.add" }}</a>
-      <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">{{_ "cancel" }}</a>
     </div>
   </div>
 

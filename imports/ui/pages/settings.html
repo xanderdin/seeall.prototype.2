@@ -1,17 +1,19 @@
 <template name="Settings_page">
 
-  {{> NavbarMain '' }}
+  <!-- {{> NavbarMain '' }} -->
 
   <h4>{{_ "Settings_page.settings" }}</h4>
   <div class="row">
-    <div class="col s12 m6 l4">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">{{_ "Settings_page.common" }}</span>
+    <div class="col-xs-12 col-md-6 col-lg-4">
+      <div class="panel">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{_ "Settings_page.common" }}</h3>
+        </div>
+        <div class="panel-body">
           <p>
             <form>
               <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col-xs-12">
                   <select id="js-language">
                     {{#each lang in languages }}
                     <option value="{{ lang._id }}" selected="{{ lang.selected }}">{{ lang.name }}</option>
