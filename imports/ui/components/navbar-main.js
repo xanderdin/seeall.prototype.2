@@ -14,7 +14,7 @@ Template.NavbarMain.onRendered(function(){
 });
 
 
-Template.AtNavLink.events({
+Template.NavbarMain.events({
   'click .js-logout'(event) {
     AccountsTemplates.logout();
   }

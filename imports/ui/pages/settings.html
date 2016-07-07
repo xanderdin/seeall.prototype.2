@@ -10,20 +10,16 @@
           <h3 class="panel-title">{{_ "Settings_page.common" }}</h3>
         </div>
         <div class="panel-body">
-          <p>
-            <form>
-              <div class="row">
-                <div class="input-field col-xs-12">
-                  <select id="js-language">
-                    {{#each lang in languages }}
-                    <option value="{{ lang._id }}" selected="{{ lang.selected }}">{{ lang.name }}</option>
-                    {{/each}}
-                  </select>
-                  <label>{{_ "Settings_page.language" }}</label>
-                </div>
-              </div>
-            </form>
-          </p>
+          <form>
+            <div class="form-group">
+              <label for="js-language">{{_ "Settings_page.language" }}</label>
+              <select id="js-language" class="form-control">
+                {{#each lang in languages }}
+                <option value="{{ lang._id }}" selected="{{ lang.selected }}">{{ lang.name }}</option>
+                {{/each}}
+              </select>
+            </div>
+          </form>
         </div>
       </div>
     </div>

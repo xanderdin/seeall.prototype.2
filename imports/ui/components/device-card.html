@@ -1,18 +1,14 @@
 <template name="Device_card">
 
-  <div class="col-xs-12 col-sm-6 col-md-3">
+  <div class="col-xs-12 {{#unless deviceDetails}}col-sm-6 col-md-3{{/unless}}">
 
-    <div class="panel panel-default">
+    <div class="panel panel-{{ device.colorClass }}">
 
       <div class="panel-heading">
-        <h3 class="panel-title">
-          <!-- <a href="" class="device-context-menu-btn waves-effect waves-light btn {{ device.colorClass }}" data-activates="device-context-menu-{{ device._id }}"> -->
-          {{ device.nameOrId }}
-          <!-- </a> -->
-        </h3>
-        <div class="dropdown pull-right">
-          <button class="btn btn-default dropdown-toggle" type="button" id="DeviceCardDropdownMenu-{{ device._id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <span class="caret" aria-hidden="true"></span>
+        <div class="dropdown pull-right clearfix">
+          <button class="btn btn-default btn-xs dropdown-toggle" type="button" id="DeviceCardDropdownMenu-{{ device._id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <!-- <span class="caret" aria-hidden="true"></span> -->
+            <i class="fa fa-bars" aria-hidden="true"></i>
           </button>
           <ul id="device-context-menu-{{ device._id }}" class="dropdown-menu" aria-labelledby="DeviceCardDropdownMenu-{{ device._id }}">
             {{#if device.canArm }}
@@ -31,6 +27,11 @@
             <li><a href="#DeviceRemove_{{ device._id }}" data-toggle="modal" class="js-device-remove">{{_ "remove" }}</a></li>
           </ul>
         </div>
+        <h3 class="panel-title">
+          <!-- <a href="" class="device-context-menu-btn waves-effect waves-light btn {{ device.colorClass }}" data-activates="device-context-menu-{{ device._id }}"> -->
+          {{ device.nameOrId }}
+          <!-- </a> -->
+        </h3>
       </div>
 
       <div class="panel-body text-center js-card-device">

@@ -222,6 +222,8 @@ Zones.helpers({
           result = MyStateColors.armedInAlarm.classColor;
         } else if (this.isArmed) {
           result = MyStateColors.armed.classColor;
+        } else if (this.isArmed === false) {
+          result = MyStateColors.disarmed.classColor;
         } else {
           result = MyStateColors.unspecified.classColor;
         }
@@ -261,6 +263,8 @@ Zones.helpers({
           result = MyStateColors.armedInAlarm.styleColor;
         } else if (this.isArmed) {
           result = MyStateColors.armed.styleColor;
+        } else if (this.isArmed === false) {
+          result = MyStateColors.disarmed.styleColor;
         } else {
           result = MyStateColors.unspecified.styleColor;
         }

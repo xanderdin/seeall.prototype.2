@@ -10,17 +10,52 @@
         {{> Device_card device=device deviceDetails=true }}
       </div>
 
+      <!-- <div class="panel-group" id="deviceAccordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="panelZones">
+            <h4 class="panel-title">
+              <a href="#collapsePanelZones" role="button" data-toggle="collapse" data-parent="#deviceAccordion" aria-expanded="true" aria-controls="collapsePanelZones">
+                {{_ "NavbarDeviceDetails.zones" }}
+              </a>
+            </h4>
+          </div>
+          <div class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panelZones" id="collapsePanelZones">
+            <div class="panel-body">
+              {{> Zones_grid zones=zones }}
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="panelUsers">
+            <h4 class="panel-title">
+              <a href="#collapsePanelUsers" role="button" data-toggle="collapse" data-parent="#deviceAccordion" aria-expanded="false" aria-controls="collapsePanelUsers">
+                {{_ "NavbarDeviceDetails.users" }}
+              </a>
+            </h4>
+          </div>
+          <div class="panel-collapase collapse" role="tabpanel" aria-labelledby="panelUsers" id="collapsePanelUsers">
+            <div class="panel-body">
+              {{> Owners_grid owners=owners }}
+            </div>
+          </div>
+        </div>
+
+      </div> -->
+
       <!-- {{> BtnFloating_DeviceActions device=device }} -->
+
+      {{> Zones_grid zones=zones }}
+      {{> Owners_grid owners=owners }}
 
     </div>
 
-    <div role="tabpanel" class="tab-pane col-xs-12" id="tabZones">
+    <!-- <div role="tabpanel" class="tab-pane col-xs-12" id="tabZones">
 
       {{> Zones_grid zones=zones }}
 
-      <!-- {{> BtnFloating_DeviceActions device=device }} -->
-
-    </div>
+    </div> -->
 
     <div role="tabpanel" class="tab-pane col-xs-12" id="tabHistory">
 
@@ -28,11 +63,11 @@
 
     </div>
 
-    <div role="tabpanel" class="tab-pane col-xs-12" id="tabUsers">
+    <!-- <div role="tabpanel" class="tab-pane col-xs-12" id="tabUsers">
 
       {{> Owners_grid owners=owners }}
 
-    </div>
+    </div> -->
 
   </div>
 

@@ -17,7 +17,38 @@
 
       <div class="collapse navbar-collapse" id="navbar-main-collapse">
         <ul class="nav navbar-nav navbar-right">
-          {{> NavbarMainItems '' }}
+
+          <li>
+            <a href="/devices/" class="hidden-xs">{{_ 'NavbarMain.devices' }}</a>
+            <a href="/devices/" class="visible-xs" data-toggle="collapse" data-target="#navbar-main-collapse">{{_ 'NavbarMain.devices' }}</a>
+          </li>
+
+          <li>
+            <a href="/settings/" class="hidden-xs">{{_ 'NavbarMain.settings' }}</a>
+            <a href="/settings/" class="visible-xs" data-toggle="collapse" data-target="#navbar-main-collapse">{{_ 'NavbarMain.settings' }}</a>
+          </li>
+
+          <li>
+            <a href="/about/" class="hidden-xs">{{_ 'NavbarMain.about' }}</a>
+            <a href="/about/" class="visible-xs" data-toggle="collapse" data-target="#navbar-main-collapse">{{_ 'NavbarMain.about' }}</a>
+          </li>
+
+          <li>
+            <a href="/help/" class="hidden-xs">{{_ 'NavbarMain.help' }}</a>
+            <a href="/help/" class="visible-xs" data-toggle="collapse" data-target="#navbar-main-collapse">{{_ 'NavbarMain.help' }}</a>
+          </li>
+
+          <!-- <li>{{> atNavButton }}</li> -->
+          <li>
+            {{#if currentUser }}
+              <a href="" class="js-logout hidden-xs">{{_ 'logout' }}</a>
+              <a href="" class="js-logout visible-xs" data-toggle="collapse" data-target="#navbar-main-collapse">{{_ 'logout' }}</a>
+            {{else}}
+              <a href="/sign-in" class="hidden-xs">{{_ 'login' }}</a>
+              <a href="/sign-in" class="visible-xs" data-toggle="collapse" data-target="#navbar-main-collapse">{{_ 'login' }}</a>
+            {{/if}}
+          </li>
+
         </ul>
       </div>
 
@@ -29,13 +60,27 @@
 </template>
 
 
-<template name="NavbarMainItems">
-  <li><a href="/devices/">{{_ 'NavbarMain.devices' }}</a></li>
-  <li><a href="/settings/">{{_ 'NavbarMain.settings' }}</a></li>
-  <li><a href="/about/">{{_ 'NavbarMain.about' }}</a></li>
-  <li><a href="/help/">{{_ 'NavbarMain.help' }}</a></li>
-  <!-- <li>{{> atNavButton }}</li> -->
-  <li>{{> AtNavLink '' }}</li>
+<!-- <template name="NavbarMainItems">
+
+  <li>
+    <a href="/devices/">{{_ 'NavbarMain.devices' }}</a>
+  </li>
+
+  <li>
+    <a href="/settings/">{{_ 'NavbarMain.settings' }}</a>
+  </li>
+
+  <li>
+    <a href="/about/">{{_ 'NavbarMain.about' }}</a>
+  </li>
+
+  <li>
+    <a href="/help/">{{_ 'NavbarMain.help' }}</a>
+  </li>
+
+  <li>
+    {{> AtNavLink '' }}
+  </li>
 </template>
 
 
@@ -45,4 +90,4 @@
   {{else}}
     <a href="/sign-in">{{_ 'login' }}</a>
   {{/if}}
-</template>
+</template> -->

@@ -280,6 +280,9 @@ Devices.helpers({
     if (this.isArmed()) {
       return MyStateColors.armed.classColor;
     }
+    if (this.isArmed() === false) {
+      return MyStateColors.disarmed.classColor;
+    }
 
     return MyStateColors.unspecified.classColor;
   },
@@ -298,6 +301,9 @@ Devices.helpers({
     }
     if (this.isArmed()) {
       return MyStateColors.armed.styleColor;
+    }
+    if (this.isArmed() === false) {
+      return MyStateColors.disarmed.styleColor;
     }
 
     return MyStateColors.unspecified.styleColor;

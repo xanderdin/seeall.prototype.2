@@ -26,9 +26,9 @@ tap:i18n
 tap:i18n-bundler
 3stack:preferences
 3stack:preferences-local-storage
-useraccounts:materialize
 useraccounts:flow-routing
 reywood:publish-composite
 mdg:validation-error
 aldeed:collection2
 mdg:validated-method
+useraccounts:bootstrap

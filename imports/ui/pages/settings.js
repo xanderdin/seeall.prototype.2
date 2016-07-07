@@ -28,10 +28,10 @@ Template.Settings_page.helpers({
 
 Template.Settings_page.onRendered(function(){
 
-  var instance = Template.instance();
-
-  // Init 'select' elements
-  instance.$('select').material_select();
+  // var instance = Template.instance();
+  //
+  // // Init 'select' elements
+  // instance.$('select').material_select();
 
 });
 
